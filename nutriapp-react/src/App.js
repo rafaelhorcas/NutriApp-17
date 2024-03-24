@@ -1,25 +1,27 @@
-import logo from './logo.svg';
 import './App.css';
+import 'bootstrap/dist/css/bootstrap.min.css';
 
-function App() {
+import Header from './components/Header';
+import Footer from './components/Footer';
+import Main from './components/mains/Main';
+import Sidebar from './components/Sidebar';
+import Title from './components/Title';
+
+import { Row, Col, Container } from 'react-bootstrap';
+import { Route, Routes } from 'react-router-dom';
+import RegistroAlimento from './components/mains/RegistroAlimento';
+
+export default function App() {
   return (
-    <div className="container">
-      <div className="header">
-        <img src={logo} alt="Logo" className="App-logo" />
-        <h1 className="app-name">NutriApp</h1>
-      </div>
-      <div className="buttons">
-        <button className="button">Botón 1</button>
-        <button className="button">Botón 2</button>
-        <button className="button">Botón 3</button>
-        <button className="button">Botón 4</button>
-      </div>
-      <div className="chart">
-        {/* Aquí irá la gráfica */}
-        <p>Espacio para la gráfica</p>
-      </div>
-    </div>
+    <Container fluid>
+      <Title/>
+      <Header/>
+      <Sidebar/>
+      <Routes>
+        <Route path="/" element={<Main/>} />
+        <Route path="/registro" element={<RegistroAlimento/>} />
+      </Routes>
+      <Footer/>
+    </Container>
   );
 }
-
-export default App;
