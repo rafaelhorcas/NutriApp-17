@@ -59,3 +59,8 @@
   padding: 20px;
   grid-area: 4 / 1 / 5 / 3; 
 }
+#encabezado-tabla{
+  display: flex;
+  align-items: center;
+  padding: 10px;
+}
