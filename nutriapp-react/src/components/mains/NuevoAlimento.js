@@ -1,3 +1,6 @@
+import '../../App.css';
+import 'bootstrap/dist/css/bootstrap.min.css';
+
 import React, { useState } from 'react';
 import { Form, Row, Col, Button } from 'react-bootstrap';
 
@@ -76,7 +79,7 @@ export default function NuevoAlimento(props) {
           </Col>
         </Form.Group>
         
-        <Button variant="success" type="submit" href="/registro" onClick={()=>props.agregarAlimento(NuevoAlimento)}>Añadir</Button>
+        <Button variant="success" type="submit" onClick={()=>handleSubmit}>Añadir</Button>
       </Form>
     </div>
   );

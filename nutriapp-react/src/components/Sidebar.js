@@ -1,5 +1,4 @@
-import { Col } from 'react-bootstrap';
-import '../App.css'
+import '../App.css';
 
 export default function Sidebar() {
   return (

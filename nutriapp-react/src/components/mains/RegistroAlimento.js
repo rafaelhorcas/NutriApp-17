@@ -1,9 +1,8 @@
-import React, { useState, useEffect} from 'react';
-import '../../App.css'
-
-import { Table, Button } from 'react-bootstrap';
-import { Link } from 'react-router-dom';
+import '../../App.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
+
+import React from 'react';
+import { Table, Button } from 'react-bootstrap';
 
 export default function RegistroAlimento(props) {
     
