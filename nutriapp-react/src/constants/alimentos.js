@@ -1,4 +1,4 @@
-export const mockdata = {
+export const mock_alimentos = {
   "alimentos": [
     {
       "nombre": "Manzana",

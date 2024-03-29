@@ -8,7 +8,7 @@ import Sidebar from './components/Sidebar';
 import Title from './components/Title';
 import RegistroAlimento from './components/mains/RegistroAlimento';
 import NuevoAlimento from './components/mains/NuevoAlimento';
-import { mockdata } from './constants/alimentos.js';
+import { mock_alimentos } from './constants/alimentos.js';
 
 import React, { useState, useEffect } from 'react';
 import { Container } from 'react-bootstrap';
@@ -22,7 +22,7 @@ export default function App() {
   let navigate = useNavigate();
 
   useEffect(() => {
-      setAlimentos(mockdata.alimentos);
+      setAlimentos(mock_alimentos.alimentos);
     }, []);
 
   const agregarAlimento = (nuevoAlimento) => {
