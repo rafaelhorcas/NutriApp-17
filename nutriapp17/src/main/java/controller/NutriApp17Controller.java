@@ -10,3 +10,4 @@ public class TFGController {
 @GetMapping("/lista") // lista de TFGs -lee todos -vista:lista
 @GetMapping("/aceptar/{id}") // aceptar una propuesta TFG -actualiza -vista:lista
 @PostMapping("/upload") // subir la memoria -actualiza -vista:lista
+}
