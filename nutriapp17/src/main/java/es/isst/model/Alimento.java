@@ -81,5 +81,5 @@ private Date fecha;
                 ", fechaDeConsumo=" + fechaDeConsumo +
                 '}';
     }
-
+//<bzb
 }  
