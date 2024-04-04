@@ -60,3 +60,35 @@ return "redirect:/" + VISTA_LISTA;
 /**return alimento;*/
 }
 
+/** public void registrarAlimento(Usuario usuario, int alimentoId, Double cantidad, Date fecha) {
+        // Aquí puedes implementar la lógica para registrar el alimento asociado al usuario
+        // Por ejemplo, podrías recuperar el alimento de la base de datos
+        
+        // Suponiendo que tienes una clase para interactuar con la base de datos
+        AlimentoDAO alimentoDAO = new AlimentoDAO(); // Suponiendo que tienes una clase AlimentoDAO para interactuar con la base de datos
+        Alimento alimento = alimentoDAO.obtenerAlimentoPorId(alimentoId);
+        
+        if (alimento != null) {
+            // Crear un nuevo registro de alimento
+            RegistroAlimento registroAlimento = new RegistroAlimento();
+            registroAlimento.setAlimento(alimento);
+            registroAlimento.setCantidad(cantidad);
+            registroAlimento.setFecha(fecha);
+            
+            // Asignar el usuario al registro de alimento
+            registroAlimento.setUsuario(usuario);
+            
+            // Aquí podrías guardar este registro en una base de datos o realizar otras acciones necesarias
+            // Por simplicidad, se asume que hay métodos setter para los campos en las clases respectivas
+            
+            // Ejemplo de guardar en una base de datos (suponiendo que haya una clase para interactuar con la base de datos)
+            // registroAlimentoDAO.save(registroAlimento);
+            
+            // También podrías realizar otras acciones, como actualizar el registro del usuario con la información del alimento consumido, etc.
+            
+            System.out.println("Alimento registrado para el usuario: " + usuario.getEmail());
+        } else {
+            System.out.println("No se encontró el alimento con el ID proporcionado.");
+        }
+    }
+*/ 

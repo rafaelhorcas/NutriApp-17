@@ -69,5 +69,4 @@ private Double grasas;
                 ", grasas=" + grasas +
                 '}';
     }
-
 }  
