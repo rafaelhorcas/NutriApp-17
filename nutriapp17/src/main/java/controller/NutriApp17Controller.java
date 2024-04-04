@@ -28,21 +28,35 @@ public class TFGController {
 @GetMapping("/") // filtro: recibir autenticación -vista: lista
 @GetMapping("/login") // filtro: recibir autenticación -vista: lista
 @GetMapping("/crear") // crear un nuevo TFG -vista:formulario
-@GetMapping("/registar")
-public String registar(Map<String, Object> model) {
-Alimento Alimento  = new Alimento ();
-model.put("Alimento ", Alimento );
-model.put("accion", "guardar");
-return VISTA_FORMULARIO;
-}
-@PostMapping("/registrado")
-public Alimento registrado(Alimento alimento) {
-return alimento;
-}
 @PostMapping("/guardar") // guardar un TFG -crea/actualiza -vista:lista
 @GetMapping("/editar/{id}") // editar ese TFG -lee -vista:formulario
-@GetMapping("/eliminar/{id}") // eliminar ese TFG -elimina -vista:lista
 @GetMapping("/lista") // lista de TFGs -lee todos -vista:lista
 @GetMapping("/aceptar/{id}") // aceptar una propuesta TFG -actualiza -vista:lista
 @PostMapping("/upload") // subir la memoria -actualiza -vista:lista
+
+@GetMapping("/registar")
+@PostMapping("/registrado")
+@GetMapping("/eliminar/{id}") 
+
+
+public String registar(Map<String, Object> model) {
+RegistroAlimento registroalimento  = new RegistroAlimento ();
+model.put("registroalimento ", registroalimento );
+model.put("accion", "registrado");
+return VISTA_FORMULARIO;
 }
+
+public void registrado() {
+return "redirect:" + VISTA_LISTA;
+}
+
+public String eliminar(@PathVariable(value = "id") String id) {
+// TODO comprobar que el usuario tiene permisos para eliminar
+restTemplate.delete(TFGMANAGER_STRING + "/" + id);
+return "redirect:/" + VISTA_LISTA;
+}
+
+
+/**return alimento;*/
+}
+

@@ -8,16 +8,14 @@ private Double calorias;
 private Double proteinas;
 private Double carbohidratos;
 private Double grasas;
-private Date fecha;
 
 
-    public Alimento(String nombre, double cantidad, double calorias, double carbohidratos, double grasas, Date fechaDeConsumo) {
+    public Alimento(String nombre, double cantidad, double calorias, double carbohidratos, double grasas) {
         this.nombre = nombre;
         this.cantidad = cantidad;
         this.calorias = calorias;
         this.carbohidratos = carbohidratos;
         this.grasas = grasas;
-        this.fecha = fecha;
     }
 
     // Métodos para acceder y modificar los atributos
@@ -60,15 +58,6 @@ private Date fecha;
     public void setGrasas(double grasas) {
         this.grasas = grasas;
     }
-
-    public Date getFecha() {
-        return fecha;
-    }
-
-    public void setFecha(Date fecha) {
-        this.fecha = fecha;
-    }
-
     // Método para imprimir la información del alimento
     @Override
     public String toString() {
@@ -78,7 +67,6 @@ private Date fecha;
                 ", calorias=" + calorias +
                 ", carbohidratos=" + carbohidratos +
                 ", grasas=" + grasas +
-                ", fechaDeConsumo=" + fechaDeConsumo +
                 '}';
     }
 
