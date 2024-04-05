@@ -43,4 +43,3 @@ export default function RegistroAlimento(props) {
     );
 }
 
-//njs
