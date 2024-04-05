@@ -24,7 +24,7 @@ private boolean espremium;
     }
 
     public void setEspremium(boolean espremium) {
-        this.espremium = espremium;
+        this.espremium = espremiu;
     }
 
 
