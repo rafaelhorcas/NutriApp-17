@@ -6,4 +6,4 @@ export default function Title(){
       <h1>NutriApp</h1>
     </div>
     );
-}
+} 
