@@ -10,10 +10,11 @@ private Double carbohidratos;
 private Double grasas;
 
 
-    public Alimento(String nombre, double cantidad, double calorias, double carbohidratos, double grasas) {
+    public Alimento(String nombre, double cantidad, double calorias, double proteinas, double carbohidratos, double grasas) {
         this.nombre = nombre;
         this.cantidad = cantidad;
         this.calorias = calorias;
+        this.proteinas = proteinas;
         this.carbohidratos = carbohidratos;
         this.grasas = grasas;
     }
@@ -41,6 +42,14 @@ private Double grasas;
 
     public void setCalorias(double calorias) {
         this.calorias = calorias;
+    }
+
+    public double getProteinas() {
+        return proteinas;
+    }
+
+    public void setProteinas(double proteinas) {
+        this.carbohidratos = proteinas;
     }
 
     public double getCarbohidratos() {
