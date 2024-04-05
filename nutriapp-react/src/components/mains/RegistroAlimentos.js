@@ -4,13 +4,16 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import React from 'react';
 import { Table, Button } from 'react-bootstrap';
 
-export default function RegistroAlimento(props) {
+export default function RegistroAlimentos(props) {
     
     return (
         <div className='main'>
         <h1>Registro de Comidas del día XX/YY/ZZ</h1>
-        <div id="encabezado-tabla">
-            <Button variant="success" href="/nuevoalimento">+</Button> 
+        <div className='botones'>
+            <Button variant="success" href="/busqueda">Rúsqueda de alimentos</Button> 
+            <Button variant="success" href="/nuevoalimento">Añadir nuevo alimento</Button> 
+        </div>
+        <div id="encabezado-tabla"> 
             <h2>Lista de Alimentos</h2>
         </div>
         <Table striped bordered hover>

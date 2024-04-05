@@ -8,8 +8,8 @@ import Habitos from './components/mains/Habitos.js';
 import Ajustes from './components/mains/Ajustes.js';
 import Sidebar from './components/Sidebar';
 import Title from './components/Title';
-import Nuevo from './components/mains/Nuevo.js';
-import RegistroAlimento from './components/mains/RegistroAlimento';
+import BusquedaAlimento from './components/mains/BusquedaAlimento.js';
+import RegistroAlimentos from './components/mains/RegistroAlimentos.js';
 import NuevoAlimento from './components/mains/NuevoAlimento';
 import { mock_alimentos } from './constants/alimentos.js';
 
@@ -30,7 +30,7 @@ export default function App() {
 
   const agregarAlimento = (nuevoAlimento) => {
     setAlimentos([...alimentos, nuevoAlimento]);
-    navigate('/registro');
+    navigate('/registroalimentos');
   };
 
   return (
@@ -40,11 +40,11 @@ export default function App() {
       <Sidebar/>
       <Routes>
         <Route path="/" element={<Main/>} />
-        <Route path="/registro" element={<RegistroAlimento alimentos={alimentos}/>} />
+        <Route path="/registroalimentos" element={<RegistroAlimentos alimentos={alimentos}/>} />
         <Route path="/nuevoalimento" element={<NuevoAlimento agregarAlimento={agregarAlimento}/>} />
+        <Route path="/busqueda" element={<BusquedaAlimento agregarAlimento={agregarAlimento}/>} /> 
         <Route path="/habitos" element={<Habitos/>} />
-        <Route path="/ajustes" element={<Ajustes/>} /> 
-        <Route path="/nuevo" element={<Nuevo/>} /> 
+        <Route path="/ajustes" element={<Ajustes/>} />
       </Routes>
       <Footer/>
     </Container>
