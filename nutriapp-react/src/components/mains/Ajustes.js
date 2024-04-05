@@ -22,6 +22,8 @@ export default function NuevoAlimento(props) {
         console.error('Error:', error);
       }
     };
+
+    
   
     return (
       <div className='main'>
@@ -52,6 +54,7 @@ export default function NuevoAlimento(props) {
                       <Card.Text>Proteínas: {product.nutriments.proteins} g</Card.Text>
                       <Card.Text>Carbohidratos: {product.nutriments.carbohydrates} g</Card.Text>
                       <Card.Text>Grasas: {product.nutriments.fat} g</Card.Text>
+                      <Button variant="success" href="/nuevo" product={product}>Seleccionar</Button> 
                     </Card.Body>
                   </Card>
                 </Col>

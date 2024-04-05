@@ -8,6 +8,7 @@ import Habitos from './components/mains/Habitos.js';
 import Ajustes from './components/mains/Ajustes.js';
 import Sidebar from './components/Sidebar';
 import Title from './components/Title';
+import Nuevo from './components/mains/Nuevo.js';
 import RegistroAlimento from './components/mains/RegistroAlimento';
 import NuevoAlimento from './components/mains/NuevoAlimento';
 import { mock_alimentos } from './constants/alimentos.js';
@@ -43,6 +44,7 @@ export default function App() {
         <Route path="/nuevoalimento" element={<NuevoAlimento agregarAlimento={agregarAlimento}/>} />
         <Route path="/habitos" element={<Habitos/>} />
         <Route path="/ajustes" element={<Ajustes/>} /> 
+        <Route path="/nuevo" element={<Nuevo/>} /> 
       </Routes>
       <Footer/>
     </Container>
