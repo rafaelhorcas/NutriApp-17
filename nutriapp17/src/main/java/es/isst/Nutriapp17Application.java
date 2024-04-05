@@ -1,4 +1,4 @@
-package es.isst.nutriapp17;
+package es.isst;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
