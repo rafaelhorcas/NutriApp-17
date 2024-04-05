@@ -1,8 +1,9 @@
 import '../../App.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
 
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Form, Row, Col, Button } from 'react-bootstrap';
+import { useLocation } from 'react-router-dom';
 
 export default function NuevoAlimento(props) {
   const [nombre, setNombre] = useState('');
@@ -11,6 +12,18 @@ export default function NuevoAlimento(props) {
   const [proteinas, setProteinas] = useState('');
   const [carbohidratos, setCarbohidratos] = useState('');
   const [grasas, setGrasas] = useState('');
+
+  const location = useLocation();
+  const product = location.state.product;
+
+  useEffect(() => {
+    setNombre(product.product_name || '');
+    setCantidad(product.quantity || '');
+    setCalorias(product.nutriments.energy || '');
+    setProteinas(product.nutriments.proteins || '');
+    setCarbohidratos(product.nutriments.carbohydrates || '');
+    setGrasas(product.nutriments.fat || '');
+  }, [product]);
 
   const handleSubmit = (e) => {
     e.preventDefault();

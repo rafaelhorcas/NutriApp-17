@@ -12,7 +12,7 @@ export default function Header () {
       <Navbar.Brand href="/">NutriApp</Navbar.Brand>
       <Container>
           <Nav className="me-auto">
-            <Nav.Link href="/registro">Registro</Nav.Link>
+            <Nav.Link href="/registroalimentos">Registro</Nav.Link>
             <Nav.Link href="/habitos">Hábitos Alimenticios</Nav.Link>
             <Nav.Link href="/comparativa">Comparativa</Nav.Link>
             <Nav.Link href="/ajustes">Ajustes</Nav.Link>
