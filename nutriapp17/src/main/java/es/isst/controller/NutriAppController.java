@@ -24,7 +24,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 @Controller
 @RequestMapping
-public class TFGController {
+public class NutriAppController {
 @GetMapping("/") // filtro: recibir autenticación -vista: lista
 @GetMapping("/login") // filtro: recibir autenticación -vista: lista
 @GetMapping("/crear") // crear un nuevo TFG -vista:formulario
@@ -40,7 +40,7 @@ public class TFGController {
 
 
 public String registar(Map<String, Object> model) {
-RegistroAlimento registroalimento  = new RegistroAlimento ();
+registroAlimento registroalimento  = new RegistroAlimento ();
 model.put("registroalimento ", registroalimento );
 model.put("accion", "registrado");
 return VISTA_FORMULARIO;
