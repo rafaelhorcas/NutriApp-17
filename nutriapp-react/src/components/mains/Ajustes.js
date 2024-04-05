@@ -64,6 +64,7 @@ export default function NuevoAlimento(props) {
         )}
       </div>
     );
+    
   }
   
   
