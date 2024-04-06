@@ -56,7 +56,8 @@ public class NutriAppController {
         Alimento nuevoAlimento = alimentoRepository.save(alimento);
         return new ResponseEntity<>(nuevoAlimento, HttpStatus.CREATED);
     }
-  
+
+    @DeleteMapping("/alimentos/{id}")
     public ResponseEntity<String> eliminarAlimento(@PathVariable String id) {
         if (alimentoRepository.existsById(id)) {
             alimentoRepository.deleteById(id);
