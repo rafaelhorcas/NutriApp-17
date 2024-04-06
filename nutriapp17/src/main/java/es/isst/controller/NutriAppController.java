@@ -85,7 +85,16 @@ public class NutriAppController {
         return new ResponseEntity<>(nuevoRegistro, HttpStatus.CREATED);
     }
 
-    
+     @DeleteMapping("/registrosAlimentos/{id}")
+    public ResponseEntity<String> eliminarRegistroAlimento(@PathVariable Integer id) {
+        if (registroAlimentoRepository.existsById(id)) {
+            registroAlimentoRepository.deleteById(id);
+            return new ResponseEntity<>("Registro de alimento eliminado exitosamente", HttpStatus.OK);
+        } else {
+            return new ResponseEntity<>("El registro de alimento no se encontró", HttpStatus.NOT_FOUND);
+        }
+    }
+
     @GetMapping("/usuarios")
     public ResponseEntity<List<Usuario>> obtenerUsuarios() {
         List<Usuario> usuarios = (List<Usuario>) usuarioRepository.findAll();
@@ -102,6 +111,16 @@ public class NutriAppController {
     public ResponseEntity<Usuario> crearUsuario(@RequestBody Usuario usuario) {
         Usuario nuevoUsuario = usuarioRepository.save(usuario);
         return new ResponseEntity<>(nuevoUsuario, HttpStatus.CREATED);
+    }
+
+    @DeleteMapping("/usuarios/{email}")
+    public ResponseEntity<String> eliminarUsuario(@PathVariable String email) {
+        if (usuarioRepository.existsById(email)) {
+            usuarioRepository.deleteById(email);
+            return new ResponseEntity<>("Usuario eliminado exitosamente", HttpStatus.OK);
+        } else {
+            return new ResponseEntity<>("El usuario no se encontró", HttpStatus.NOT_FOUND);
+        }
     }
 
     
