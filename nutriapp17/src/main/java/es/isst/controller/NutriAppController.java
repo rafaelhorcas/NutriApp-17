@@ -26,10 +26,24 @@ import org.springframework.data.repository.CrudRepository;
 @Controller
 @RequestMapping
 public class NutriAppController {
+
+  private final Alimentoepository alimentoRepository;
+  private final RegistroAlimentoRepository registroalimentoRepository;
+  private final UsuarioRepository usuarioRepository;  
+  public static final Logger log = LoggerFactory.getLogger(NutriAppController.class);
+  
+  public TFGController(AlimentoRepository a, RegistroAlimentoRepository r, UsuarioRepository u) {
+    this.alimentoRepository = a;
+    this.sregistroalimentoRepository = r;
+    this.usuarioRepository = u;  
+  } 
+  
 @GetMapping("/") // filtro: recibir autenticación -vista: lista
 @GetMapping("/registro") // crear un nuevo TFG -vista:formulario
 @GetMapping("/nuevoalimento") // editar ese TFG -lee -vista:formulario
 @GetMapping("/habitos") // lista de TFGs -lee todos -vista:lista
 @GetMapping("/nuevo") // aceptar una propuesta TFG -actualiza -vista:lista
+
+
 
 
