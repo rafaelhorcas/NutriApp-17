@@ -1,27 +1,26 @@
-import java.security.Principal;
-import java.util.ArrayList;
-import java.util.Arrays;
+import java.lang.System.Logger;
+import java.util.Date;
 import java.util.List;
-import java.util.Map;
-import org.springframework.core.io.ByteArrayResource;
-import org.springframework.http.HttpHeaders;
+import java.util.Optional;
+
+import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
-import org.springframework.validation.BindingResult;
-import org.springframework.validation.annotation.Validated;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.client.HttpClientErrorException;
-import org.springframework.web.client.RestTemplate;
-import org.springframework.web.multipart.MultipartFile;
-import org.springframework.data.repository.CrudRepository;
+
+import es.isst.model.Alimento;
+import es.isst.model.RegistroAlimento;
+import es.isst.model.Usuario;
+import es.isst.repository.AlimentoRepository;
+import es.isst.repository.RegistroAlimentoRepository;
+import es.isst.repository.UsuarioRepository;
 
 @Controller
 @RequestMapping
@@ -32,9 +31,9 @@ public class NutriAppController {
   private final UsuarioRepository usuarioRepository;  
   public static final Logger log = LoggerFactory.getLogger(NutriAppController.class);
   
-  public TFGController(AlimentoRepository a, RegistroAlimentoRepository r, UsuarioRepository u) {
+  public NutriAppController(AlimentoRepository a, RegistroAlimentoRepository r, UsuarioRepository u) {
     this.alimentoRepository = a;
-    this.sregistroalimentoRepository = r;
+    this.registroalimentoRepository = r;
     this.usuarioRepository = u;  
   }
 
@@ -69,26 +68,26 @@ public class NutriAppController {
 
     @GetMapping("/registrosAlimentos")
     public ResponseEntity<List<RegistroAlimento>> obtenerRegistrosAlimentos() {
-        List<RegistroAlimento> registros = (List<RegistroAlimento>) registroAlimentoRepository.findAll();
+        List<RegistroAlimento> registros = (List<RegistroAlimento>) registroalimentoRepository.findAll();
         return new ResponseEntity<>(registros, HttpStatus.OK);
     }
 
     @GetMapping("/registrosAlimentos/{id}")
-    public ResponseEntity<List<RegistroAlimento>> obtenerRegistrosAlimentosPorId(@PathVariable Int id) {
-        List<RegistroAlimento> registros = registroAlimentoRepository.findByRegistroAlimento(id);
+    public ResponseEntity<List<RegistroAlimento>> obtenerRegistrosAlimentosPorId(@PathVariable Integer id) {
+        List<RegistroAlimento> registros = registroalimentoRepository.findByRegistroAlimento(id);
         return new ResponseEntity<>(registros, HttpStatus.OK);
     }
 
     @PostMapping("/registrosAlimentos")
     public ResponseEntity<RegistroAlimento> crearRegistroAlimento(@RequestBody RegistroAlimento registroAlimento) {
-        RegistroAlimento nuevoRegistro = registroAlimentoRepository.save(registroAlimento);
+        RegistroAlimento nuevoRegistro = registroalimentoRepository.save(registroAlimento);
         return new ResponseEntity<>(nuevoRegistro, HttpStatus.CREATED);
     }
 
      @DeleteMapping("/registrosAlimentos/{id}")
     public ResponseEntity<String> eliminarRegistroAlimento(@PathVariable Integer id) {
-        if (registroAlimentoRepository.existsById(id)) {
-            registroAlimentoRepository.deleteById(id);
+        if (registroalimentoRepository.existsById(id)) {
+            registroalimentoRepository.deleteById(id);
             return new ResponseEntity<>("Registro de alimento eliminado exitosamente", HttpStatus.OK);
         } else {
             return new ResponseEntity<>("El registro de alimento no se encontró", HttpStatus.NOT_FOUND);
@@ -123,10 +122,17 @@ public class NutriAppController {
         }
     }
 
+    /**
+     * @brief Devuelve los elementos RegistroAlimento para un usuario (email) y una fecha (día actual)
+     * @param email Email del usuario
+     * @param fecha Fecha del día actual
+     * @return
+     */
+    @GetMapping("/registroDiario")
+    public List<RegistroAlimento> obtenerAlimentosPorUsuarioYFecha(@RequestParam String email, @RequestParam Date fecha){
+        return registroalimentoRepository.findByUsuarioAndFecha(email, fecha);
+    }
     
-
-
-
 
 
 
