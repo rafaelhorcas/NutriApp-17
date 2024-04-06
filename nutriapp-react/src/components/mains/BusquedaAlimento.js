@@ -4,12 +4,19 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 
 import React, { useState } from 'react';
 import { Form, Row, Col, Button, Card } from 'react-bootstrap';
+import { useNavigate } from 'react-router-dom';
 
 
 export default function NuevoAlimento(props) {
     const [nombre, setNombre] = useState('');
     const [searchResults, setSearchResults] = useState([]);
-  
+
+    const navigate = useNavigate();
+
+    const handleSelectProduct = (product) => {
+      navigate('/nuevoalimento', { state: { product: product } });
+    };
+
     const handleSearch = async () => {
       try {
         const response = await fetch(`https://world.openfoodfacts.org/cgi/search.pl?search_terms=${nombre}&page_size=10&json=1`);
@@ -50,11 +57,12 @@ export default function NuevoAlimento(props) {
                       <Card.Title>{product.product_name}</Card.Title>
                       <Card.Text>Categoría: {product.categories}</Card.Text>
                       <Card.Text>Marca: {product.brands}</Card.Text>
+                      <Card.Text>Cantidad: {product.quantity}</Card.Text>
                       <Card.Text>Calorías: {product.nutriments.energy} kcal</Card.Text>
                       <Card.Text>Proteínas: {product.nutriments.proteins} g</Card.Text>
                       <Card.Text>Carbohidratos: {product.nutriments.carbohydrates} g</Card.Text>
                       <Card.Text>Grasas: {product.nutriments.fat} g</Card.Text>
-                      <Button variant="success" href="/nuevo" product={product}>Seleccionar</Button> 
+                      <Button variant="success" onClick={() => handleSelectProduct(product)}>Seleccionar</Button> 
                     </Card.Body>
                   </Card>
                 </Col>
@@ -64,8 +72,4 @@ export default function NuevoAlimento(props) {
         )}
       </div>
     );
-    
   }
-  
-  
-
