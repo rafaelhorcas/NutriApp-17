@@ -1,3 +1,3 @@
 public interface RegistroAlimentoRepository extends CrudRepository<RegistroAlimento, String> {
-List<RegistroAlimento> findByRegistroAlimento(Int ID);
+List<RegistroAlimento> findByRegistroAlimento(Int id);
 }
