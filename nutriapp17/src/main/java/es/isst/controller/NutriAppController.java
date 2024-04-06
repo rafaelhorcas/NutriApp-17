@@ -56,8 +56,16 @@ public class NutriAppController {
         Alimento nuevoAlimento = alimentoRepository.save(alimento);
         return new ResponseEntity<>(nuevoAlimento, HttpStatus.CREATED);
     }
+  
+    public ResponseEntity<String> eliminarAlimento(@PathVariable String id) {
+        if (alimentoRepository.existsById(id)) {
+            alimentoRepository.deleteById(id);
+            return new ResponseEntity<>("Alimento eliminado exitosamente", HttpStatus.OK);
+        } else {
+            return new ResponseEntity<>("El alimento no se encontró", HttpStatus.NOT_FOUND);
+        }
+    }
 
-   
     @GetMapping("/registrosAlimentos")
     public ResponseEntity<List<RegistroAlimento>> obtenerRegistrosAlimentos() {
         List<RegistroAlimento> registros = (List<RegistroAlimento>) registroAlimentoRepository.findAll();
