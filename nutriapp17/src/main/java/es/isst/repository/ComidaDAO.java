@@ -1,9 +1,3 @@
-public interface FoodDAO {
-    void addFood(Food food);
-    void updateFood(Food food);
-    void deleteFood(int foodId);
-    Food getFoodById(int foodId);
-    List<Food> getAllFoods();
-    List<Food> getFoodsByName(String name);
-    List<Food> getFoodsByCategory(String category);
+public interface ComidaRepository extends CrudRepository<Comida, String> {
+List<Comida> findByComida(String comida);
 }
