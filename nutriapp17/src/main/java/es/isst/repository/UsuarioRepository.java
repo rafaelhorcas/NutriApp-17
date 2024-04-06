@@ -1,3 +1,3 @@
-public interface TFGRepository extends CrudRepository<TFG, String> {
-List<TFG> findByTutor(String tutor);
+public interface TFGRepository extends CrudRepository<Usuario, String> {
+List<TFG> findByUsuario(String email);
 }
