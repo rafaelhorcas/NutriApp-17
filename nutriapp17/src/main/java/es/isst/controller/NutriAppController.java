@@ -38,6 +38,7 @@ public class NutriAppController {
     this.usuarioRepository = u;  
   }
 
+   
     @GetMapping("/alimentos")
     public ResponseEntity<List<Alimento>> obtenerAlimentos() {
         List<Alimento> alimentos = (List<Alimento>) alimentoRepository.findAll();
@@ -56,6 +57,7 @@ public class NutriAppController {
         return new ResponseEntity<>(nuevoAlimento, HttpStatus.CREATED);
     }
 
+   
     @GetMapping("/registrosAlimentos")
     public ResponseEntity<List<RegistroAlimento>> obtenerRegistrosAlimentos() {
         List<RegistroAlimento> registros = (List<RegistroAlimento>) registroAlimentoRepository.findAll();
@@ -74,23 +76,36 @@ public class NutriAppController {
         return new ResponseEntity<>(nuevoRegistro, HttpStatus.CREATED);
     }
 
-    @GetMapping("/tfgs")
-    public ResponseEntity<List<TFG>> obtenerTFGs() {
-        List<TFG> tfgs = (List<TFG>) tfgRepository.findAll();
-        return new ResponseEntity<>(tfgs, HttpStatus.OK);
+    
+    @GetMapping("/usuarios")
+    public ResponseEntity<List<Usuario>> obtenerUsuarios() {
+        List<Usuario> usuarios = (List<Usuario>) usuarioRepository.findAll();
+        return new ResponseEntity<>(usuarios, HttpStatus.OK);
     }
 
-    @GetMapping("/tfgs/{email}")
-    public ResponseEntity<List<TFG>> obtenerTFGsPorUsuario(@PathVariable String email) {
-        List<TFG> tfgs = tfgRepository.findByUsuario(email);
-        return new ResponseEntity<>(tfgs, HttpStatus.OK);
+    @GetMapping("/usuarios/{email}")
+    public ResponseEntity<Usuario> obtenerUsuarioPorEmail(@PathVariable String email) {
+        Optional<Usuario> usuario = usuarioRepository.findByUsuario(email);
+        return usuario.map(value -> new ResponseEntity<>(value, HttpStatus.OK)).orElseGet(() -> new ResponseEntity<>(HttpStatus.NOT_FOUND));
     }
 
-    @PostMapping("/tfgs")
-    public ResponseEntity<TFG> crearTFG(@RequestBody TFG tfg) {
-        TFG nuevoTFG = tfgRepository.save(tfg);
-        return new ResponseEntity<>(nuevoTFG, HttpStatus.CREATED);
+    @PostMapping("/usuarios")
+    public ResponseEntity<Usuario> crearUsuario(@RequestBody Usuario usuario) {
+        Usuario nuevoUsuario = usuarioRepository.save(usuario);
+        return new ResponseEntity<>(nuevoUsuario, HttpStatus.CREATED);
     }
+
+    
+
+
+
+
+
+
+
+
+
+  
   
 @GetMapping("/") // filtro: recibir autenticación -vista: lista
 @GetMapping("/registro") // crear un nuevo TFG -vista:formulario
