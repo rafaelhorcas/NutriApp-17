@@ -27,7 +27,7 @@ import org.springframework.data.repository.CrudRepository;
 @RequestMapping
 public class NutriAppController {
 
-  private final Alimentoepository alimentoRepository;
+  private final AlimentoRepository alimentoRepository;
   private final RegistroAlimentoRepository registroalimentoRepository;
   private final UsuarioRepository usuarioRepository;  
   public static final Logger log = LoggerFactory.getLogger(NutriAppController.class);
