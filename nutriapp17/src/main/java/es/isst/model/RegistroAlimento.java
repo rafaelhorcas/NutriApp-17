@@ -48,7 +48,7 @@ private Date fecha;
         this.fecha = fecha;
     }
 
-    // Método para imprimir la información del alimento
+    // Método para imprimir la información del alimento.
     @Override
     public String toString() {
         return "RegistroAlimento{" +
