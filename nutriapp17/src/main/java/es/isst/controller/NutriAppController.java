@@ -36,14 +36,68 @@ public class NutriAppController {
     this.alimentoRepository = a;
     this.sregistroalimentoRepository = r;
     this.usuarioRepository = u;  
-  } 
+  }
+
+    @GetMapping("/alimentos")
+    public ResponseEntity<List<Alimento>> obtenerAlimentos() {
+        List<Alimento> alimentos = (List<Alimento>) alimentoRepository.findAll();
+        return new ResponseEntity<>(alimentos, HttpStatus.OK);
+    }
+
+    @GetMapping("/alimentos/{nombre}")
+    public ResponseEntity<List<Alimento>> obtenerAlimentosPorNombre(@PathVariable String nombre) {
+        List<Alimento> alimentos = alimentoRepository.findByAlimento(nombre);
+        return new ResponseEntity<>(alimentos, HttpStatus.OK);
+    }
+
+    @PostMapping("/alimentos")
+    public ResponseEntity<Alimento> crearAlimento(@RequestBody Alimento alimento) {
+        Alimento nuevoAlimento = alimentoRepository.save(alimento);
+        return new ResponseEntity<>(nuevoAlimento, HttpStatus.CREATED);
+    }
+
+    @GetMapping("/registrosAlimentos")
+    public ResponseEntity<List<RegistroAlimento>> obtenerRegistrosAlimentos() {
+        List<RegistroAlimento> registros = (List<RegistroAlimento>) registroAlimentoRepository.findAll();
+        return new ResponseEntity<>(registros, HttpStatus.OK);
+    }
+
+    @GetMapping("/registrosAlimentos/{id}")
+    public ResponseEntity<List<RegistroAlimento>> obtenerRegistrosAlimentosPorId(@PathVariable Int id) {
+        List<RegistroAlimento> registros = registroAlimentoRepository.findByRegistroAlimento(id);
+        return new ResponseEntity<>(registros, HttpStatus.OK);
+    }
+
+    @PostMapping("/registrosAlimentos")
+    public ResponseEntity<RegistroAlimento> crearRegistroAlimento(@RequestBody RegistroAlimento registroAlimento) {
+        RegistroAlimento nuevoRegistro = registroAlimentoRepository.save(registroAlimento);
+        return new ResponseEntity<>(nuevoRegistro, HttpStatus.CREATED);
+    }
+
+    @GetMapping("/tfgs")
+    public ResponseEntity<List<TFG>> obtenerTFGs() {
+        List<TFG> tfgs = (List<TFG>) tfgRepository.findAll();
+        return new ResponseEntity<>(tfgs, HttpStatus.OK);
+    }
+
+    @GetMapping("/tfgs/{email}")
+    public ResponseEntity<List<TFG>> obtenerTFGsPorUsuario(@PathVariable String email) {
+        List<TFG> tfgs = tfgRepository.findByUsuario(email);
+        return new ResponseEntity<>(tfgs, HttpStatus.OK);
+    }
+
+    @PostMapping("/tfgs")
+    public ResponseEntity<TFG> crearTFG(@RequestBody TFG tfg) {
+        TFG nuevoTFG = tfgRepository.save(tfg);
+        return new ResponseEntity<>(nuevoTFG, HttpStatus.CREATED);
+    }
   
 @GetMapping("/") // filtro: recibir autenticación -vista: lista
 @GetMapping("/registro") // crear un nuevo TFG -vista:formulario
 @GetMapping("/nuevoalimento") // editar ese TFG -lee -vista:formulario
 @GetMapping("/habitos") // lista de TFGs -lee todos -vista:lista
 @GetMapping("/nuevo") // aceptar una propuesta TFG -actualiza -vista:lista
-
+}
 
 
 
