@@ -36,6 +36,7 @@ export default function NuevoAlimento(props) {
             </Col>
           </Form.Group>
           <Button variant="primary" type="submit">Buscar</Button>
+          
         </Form>
   
         {searchResults.length > 0 && (
