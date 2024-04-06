@@ -6,50 +6,54 @@ import { Form, Row, Col, Button } from 'react-bootstrap';
 import { useLocation } from 'react-router-dom';
 
 export default function NuevoAlimento(props) {
-  const [nombre, setNombre] = useState('');
-  const [cantidad, setCantidad] = useState('');
-  const [calorias, setCalorias] = useState('');
-  const [proteinas, setProteinas] = useState('');
-  const [carbohidratos, setCarbohidratos] = useState('');
-  const [grasas, setGrasas] = useState('');
+  const [alimento, setAlimento] = useState({
+    nombre: '',
+    cantidad: '',
+    calorias: '',
+    proteinas: '',
+    carbohidratos: '',
+    grasas: ''
+  });
 
   const location = useLocation();
-  const product = location.state.product;
+  const product = location.state?.product;
 
-  useEffect(() => {
-    setNombre(product.product_name || '');
-    setCantidad(product.quantity || '');
-    setCalorias(product.nutriments.energy || '');
-    setProteinas(product.nutriments.proteins || '');
-    setCarbohidratos(product.nutriments.carbohydrates || '');
-    setGrasas(product.nutriments.fat || '');
+   useEffect(() => {
+    if (product) {
+      setAlimento({
+        nombre: product.product_name || '',
+        cantidad: product.quantity || '',
+        calorias: product.nutriments.energy || '',
+        proteinas: product.nutriments.proteins || '',
+        carbohidratos: product.nutriments.carbohydrates || '',
+        grasas: product.nutriments.fat || ''
+      });
+    }
   }, [product]);
 
   const handleSubmit = (e) => {
     e.preventDefault();
     // Validar que se ingresen todos los campos antes de agregar el alimento
-    if (!nombre || !cantidad || !calorias || !proteinas || !carbohidratos || !grasas) {
+    if (!alimento.nombre || !alimento.cantidad || !alimento.calorias || !alimento.proteinas || !alimento.carbohidratos || !alimento.grasas) {
       return;
     }
-    // Crear el objeto de alimento
-    const nuevoAlimento = {
-      nombre: nombre,
-      cantidad: cantidad,
-      calorias: calorias,
-      proteinas: proteinas,
-      carbohidratos: carbohidratos,
-      grasas: grasas
-    };
-    // Agregar el nuevo alimento a la lista de alimentos
-    props.agregarAlimento(nuevoAlimento);
+    props.agregarAlimento(alimento);
     // Limpiar los campos del formulario después de agregar el alimento
-    setNombre('');
-    setCantidad('');
-    setCalorias('');
-    setProteinas('');
-    setCarbohidratos('');
-    setGrasas('');
+    setAlimento({
+      nombre: '',
+      cantidad: '',
+      calorias: '',
+      proteinas: '',
+      carbohidratos: '',
+      grasas: ''
+    });
   };
+
+  const handleInputChange = (e) => {
+    const { name, value } = e.target;
+    setAlimento({ ...alimento, [name]: value });
+  };
+
 
   return (
     <div className='main'>
@@ -58,41 +62,41 @@ export default function NuevoAlimento(props) {
         <Form.Group as={Row} className="mb-3" controlId="formNombre">
           <Form.Label column sm={2}>Nombre</Form.Label>
           <Col sm={10}>
-            <Form.Control type="text" placeholder="Nombre del alimento" value={nombre} onChange={(e) => setNombre(e.target.value)} />
+            <Form.Control type="text" name="nombre" placeholder="Nombre del alimento" value={alimento.nombre} onChange={handleInputChange} />
           </Col>
         </Form.Group>
         <Form.Group as={Row} className="mb-3" controlId="formCantidad">
           <Form.Label column sm={2}>Cantidad</Form.Label>
           <Col sm={10}>
-            <Form.Control type="text" placeholder="Cantidad de alimento" value={cantidad} onChange={(e) => setCantidad(e.target.value)} />
+            <Form.Control type="text" name="cantidad" placeholder="Cantidad de alimento" value={alimento.cantidad} onChange={handleInputChange} />
           </Col>
         </Form.Group>
         <Form.Group as={Row} className="mb-3" controlId="formCal">
           <Form.Label column sm={2}>Calorías</Form.Label>
           <Col sm={10}>
-            <Form.Control type="text" placeholder="Número de calorías" value={calorias} onChange={(e) => setCalorias(e.target.value)} />
+            <Form.Control type="text" name="calorias" placeholder="Número de calorías" value={alimento.calorias} onChange={handleInputChange} />
           </Col>
         </Form.Group>
         <Form.Group as={Row} className="mb-3" controlId="formProt">
           <Form.Label column sm={2}>Proteinas</Form.Label>
           <Col sm={10}>
-            <Form.Control type="text" placeholder="Número de proteínas" value={proteinas} onChange={(e) => setProteinas(e.target.value)} />
+            <Form.Control type="text" name="proteinas" placeholder="Número de proteínas" value={alimento.proteinas} onChange={handleInputChange} />
           </Col>
         </Form.Group>
         <Form.Group as={Row} className="mb-3" controlId="formCHO">
           <Form.Label column sm={2}>Carbohidratos</Form.Label>
           <Col sm={10}>
-            <Form.Control type="text" placeholder="Número de carbohidratos" value={carbohidratos} onChange={(e) => setCarbohidratos(e.target.value)} />
+            <Form.Control type="text" name="carbohidratos" placeholder="Número de carbohidratos" value={alimento.carbohidratos} onChange={handleInputChange} />
           </Col>
         </Form.Group>
         <Form.Group as={Row} className="mb-3" controlId="formGra">
           <Form.Label column sm={2}>Grasas</Form.Label>
           <Col sm={10}>
-            <Form.Control type="text" placeholder="Número de grasas" value={grasas} onChange={(e) => setGrasas(e.target.value)} />
+            <Form.Control type="text" name="grasas" placeholder="Número de grasas" value={alimento.grasas} onChange={handleInputChange} />
           </Col>
         </Form.Group>
         
-        <Button variant="success" type="submit" onClick={()=>handleSubmit}>Añadir</Button>
+        <Button variant="success" type="submit">Añadir</Button>
       </Form>
     </div>
   );
