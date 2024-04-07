@@ -107,6 +107,9 @@ private Double sal;
                 ", calorias=" + calorias +
                 ", carbohidratos=" + carbohidratos +
                 ", grasas=" + grasas +
+                ", grasas_saturadas=" + grasas_saturadas +
+                ", azucares=" + azucares +
+                ", sal=" + sal +
                 '}';
     }
 }  
