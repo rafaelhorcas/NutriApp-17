@@ -8,6 +8,9 @@ private Double calorias;
 private Double proteinas;
 private Double carbohidratos;
 private Double grasas;
+private Double grasas_saturadas;
+private Double azucares;
+private Double sal;
 
 
     public Alimento(String nombre, double cantidad, double calorias, double proteinas, double carbohidratos, double grasas) {
@@ -17,6 +20,9 @@ private Double grasas;
         this.proteinas = proteinas;
         this.carbohidratos = carbohidratos;
         this.grasas = grasas;
+        this.grasas_saturadas = grasas_saturadas;
+        this.azucares = azucares;
+        this.sal = sal;
     }
 
     // Métodos para acceder y modificar los atributos
@@ -67,6 +73,31 @@ private Double grasas;
     public void setGrasas(double grasas) {
         this.grasas = grasas;
     }
+
+     public double getGrasas_saturadas() {
+        return grasas_saturadas;
+    }
+
+    public void setGrasas_saturadas(double grasas_saturadas) {
+        this.grasas_saturadas = grasas_saturadas;
+    }
+
+     public double getAzucares() {
+        return azucares;
+    }
+
+    public void setAzucares(double azucares) {
+        this.azucares = azucares;
+    }
+
+     public double getSal() {
+        return sal;
+    }
+
+     public void setSal(double sal) {
+        this.sal = sal;
+    }
+    
     // Método para imprimir la información del alimento
     @Override
     public String toString() {
