@@ -1,6 +1,6 @@
 package es.isst.model;
 
-import java.util.Date;
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -15,23 +15,24 @@ public class  RegistroAlimento{
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private Double cantidad;
-    private Date fecha;
+    private String fecha;
 
     @ManyToOne
     @JoinColumn(name = "usuario_email")
     private Usuario usuario; // FK
 
-    @ManyToOne
+    @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "alimento_nombre")
     private Alimento alimento; // FK
 
-    public RegistroAlimento(Long id, Double cantidad, Date fecha, Alimento alimento, Usuario usuario) {
+    public RegistroAlimento(Long id, Double cantidad, String fecha, Alimento alimento, Usuario usuario) {
         this.id = id;
         this.alimento= alimento;
         this.cantidad = cantidad;
         this.fecha = fecha;
         this.usuario = usuario;
     }
+    public RegistroAlimento(){}
 
     public void setCantidad(Double cantidad) {
         this.cantidad = cantidad;
@@ -70,11 +71,11 @@ public class  RegistroAlimento{
         this.cantidad = cantidad;
     }
 
-    public Date getFecha() {
+    public String getFecha() {
         return fecha;
     }
 
-    public void setFecha(Date fecha) {
+    public void setFecha(String fecha) {
         this.fecha = fecha;
     }
 

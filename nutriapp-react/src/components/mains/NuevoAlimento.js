@@ -3,9 +3,13 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 
 import React, { useState, useEffect } from 'react';
 import { Form, Row, Col, Button } from 'react-bootstrap';
-import { useLocation } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 
 export default function NuevoAlimento(props) {
+
+  const location = useLocation();
+  const product = location.state?.product;
+  let navigate = useNavigate();
   const [alimento, setAlimento] = useState({
     nombre: '',
     cantidad: '',
@@ -15,10 +19,7 @@ export default function NuevoAlimento(props) {
     grasas: ''
   });
 
-  const location = useLocation();
-  const product = location.state?.product;
-
-   useEffect(() => {
+  useEffect(() => {
     if (product) {
       setAlimento({
         nombre: product.product_name || '',
@@ -31,29 +32,59 @@ export default function NuevoAlimento(props) {
     }
   }, [product]);
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
     // Validar que se ingresen todos los campos antes de agregar el alimento
     if (!alimento.nombre || !alimento.cantidad || !alimento.calorias || !alimento.proteinas || !alimento.carbohidratos || !alimento.grasas) {
       return;
     }
-    props.agregarAlimento(alimento);
-    // Limpiar los campos del formulario después de agregar el alimento
-    setAlimento({
-      nombre: '',
-      cantidad: '',
-      calorias: '',
-      proteinas: '',
-      carbohidratos: '',
-      grasas: ''
-    });
+
+    try {
+      const response = await fetch('http://localhost:8080/registroAlimentos', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ 
+          cantidad: alimento.cantidad,
+          usuario: props.usuario,
+          fecha: props.fecha,
+          alimento: {
+            nombre: alimento.nombre,
+            calorias: alimento.calorias,
+            proteinas: alimento.proteinas,
+            carbohidratos: alimento.carbohidratos,
+            grasas: alimento.grasas
+          }
+        }),
+      });
+      console.log(response)
+
+      if (!response.ok) {
+        throw new Error('Error al añadir alimento');
+      }
+
+      // Manejar la respuesta si es necesario
+      console.log('Alimento añadido correctamente');
+      // Limpiar los campos del formulario después de agregar el alimento
+      setAlimento({
+        nombre: '',
+        cantidad: '',
+        calorias: '',
+        proteinas: '',
+        carbohidratos: '',
+        grasas: ''
+      });
+      navigate("/registroalimentos")
+      } catch (error) {
+        console.error('Error:', error);
+      }
   };
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
     setAlimento({ ...alimento, [name]: value });
   };
-
 
   return (
     <div className='main'>
