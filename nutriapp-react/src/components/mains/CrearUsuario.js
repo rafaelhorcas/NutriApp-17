@@ -1,53 +1,61 @@
 import '../../App.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
 
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { Form, Row, Col, Button } from 'react-bootstrap';
-import { useLocation } from 'react-router-dom';
-
+import { useNavigate } from 'react-router-dom';
 export default function NuevoUsuario(props) {
+  let navigate = useNavigate();
   const [usuario, setUsuario] = useState({
     nombre: '',
     email: '',
     contraseña: '',
     confirmar_contraseña: '',
+    esPremium: false,
   });
-
-  const location = useLocation();
-  const product = location.state?.product;
-
-   useEffect(() => {
-    if (product) {
-      setUsuario({
-        nombre: product.user_name || '',
-        email: product.email || '',
-        contraseña: product.pasword.original || '',
-        confirmar_contraseña: product.pasword.confirm || '',
-      });
-    }
-  }, [product]);
-
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    // Validar que se ingresen todos los campos antes de agregar el alimento
-    if (!usuario.nombre || !usuario.email || !usuario.contraseña || !usuario.confirmar_contraseña || usuario.contraseña !== usuario.confirmar_contraseña ) {
-      return;
-    }
-    props.agregarUsuario(usuario);
-    // Limpiar los campos del formulario después de agregar el alimento
-    setUsuario({
-        nombre: '',
-        email: '',
-        contraseña: '',
-        confirmar_contraseña: '',
-    });
-  };
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
     setUsuario({ ...usuario, [name]: value });
   };
 
+  const handlePremiumToggle = () => {
+    setUsuario({ ...usuario, esPremium: !usuario.esPremium });
+  };
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    if (!usuario.nombre || !usuario.email || !usuario.contraseña || !usuario.confirmar_contraseña || usuario.contraseña !== usuario.confirmar_contraseña) {
+      return;
+    }
+
+    try {
+      const response = await fetch('http://localhost:8080/usuarios', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ email: usuario.email, espremium: usuario.esPremium }),
+      });
+
+      if (!response.ok) {
+        throw new Error('Error al crear usuario');
+      }
+      console.log(response)
+      // Limpiar los campos del formulario después de agregar el usuario
+      setUsuario({
+        nombre: '',
+        email: '',
+        contraseña: '',
+        confirmar_contraseña: '',
+        esPremium: false,
+      });
+      navigate('/');
+
+    } catch (error) {
+      console.error('Error:', error);
+    }
+  };
 
   return (
     <div className='main'>
@@ -77,7 +85,9 @@ export default function NuevoUsuario(props) {
             <Form.Control type="text" name="confirmar_contraseña" placeholder="Confirmar Contraseña" value={usuario.confirmar_contraseña} onChange={handleInputChange} />
           </Col>
         </Form.Group>
-        
+        <Form.Group className="mb-3" controlId="formEsPremium">
+          <Form.Check type="switch" id="custom-switch" label="Usuario Premium:" checked={usuario.esPremium} onChange={handlePremiumToggle}/>
+        </Form.Group>
         <Button variant="success" type="submit">Crear</Button>
       </Form>
     </div>

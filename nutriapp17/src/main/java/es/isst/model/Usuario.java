@@ -14,7 +14,7 @@ public class Usuario{
         this.email = email;
         this.espremium = espremium;
     }
-
+    public Usuario(){}
     // Métodos para acceder y modificar los atributos
     public String getEmail() {
         return email;
