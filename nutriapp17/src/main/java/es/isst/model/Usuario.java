@@ -1,13 +1,16 @@
-import java.util.Date;
+package es.isst.model;
 
+import jakarta.persistence.Entity;
+import jakarta.persistence.Id;
+
+@Entity
 public class Usuario{
 
-@NotEmpty private String email;
-private boolean espremium;
-private string contrasena;
+    @Id private String email;
+    private boolean espremium;
 
 
-    public Usuario(String email,boolean espremium;) {
+    public Usuario(String email, boolean espremium) {
         this.email = email;
         this.espremium = espremium;
     }
@@ -28,14 +31,6 @@ private string contrasena;
         this.espremium = espremium;
     }
 
-    public String getContrasena(){
-        return contrasena;
-    }
-
-    public void setContrasena() {
-        this.contrasena = contrasena;
-    }
-    
 
     // Método para imprimir la información del usuario
     @Override
@@ -43,7 +38,6 @@ private string contrasena;
         return "Usuario{" +
                 "email='" + email + '\'' +
                 ", espremium=" + espremium +
-                ", contrasena=" + contrasena +
                 '}';
     }
 

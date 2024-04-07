@@ -9,7 +9,5 @@ import es.isst.model.RegistroAlimento;
 
 public interface RegistroAlimentoRepository extends CrudRepository<RegistroAlimento, Integer> {
 
-    List<RegistroAlimento> findByRegistroAlimento(Integer id);
-
     List<RegistroAlimento> findByUsuarioAndFecha(String email, Date fecha);
 }

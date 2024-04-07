@@ -1,3 +1,5 @@
+package es.isst.controller;
+
 import java.lang.System.Logger;
 import java.util.Date;
 import java.util.List;
@@ -29,7 +31,7 @@ public class NutriAppController {
   private final AlimentoRepository alimentoRepository;
   private final RegistroAlimentoRepository registroalimentoRepository;
   private final UsuarioRepository usuarioRepository;  
-  public static final Logger log = LoggerFactory.getLogger(NutriAppController.class);
+  //public static final Logger log = LoggerFactory.getLogger(NutriAppController.class);
   
   public NutriAppController(AlimentoRepository a, RegistroAlimentoRepository r, UsuarioRepository u) {
     this.alimentoRepository = a;
@@ -46,7 +48,7 @@ public class NutriAppController {
 
     @GetMapping("/alimentos/{nombre}")
     public ResponseEntity<List<Alimento>> obtenerAlimentosPorNombre(@PathVariable String nombre) {
-        List<Alimento> alimentos = alimentoRepository.findByAlimento(nombre);
+        List<Alimento> alimentos = alimentoRepository.findByNombre(nombre);
         return new ResponseEntity<>(alimentos, HttpStatus.OK);
     }
 
@@ -74,7 +76,7 @@ public class NutriAppController {
 
     @GetMapping("/registrosAlimentos/{id}")
     public ResponseEntity<List<RegistroAlimento>> obtenerRegistrosAlimentosPorId(@PathVariable Integer id) {
-        List<RegistroAlimento> registros = registroalimentoRepository.findByRegistroAlimento(id);
+        List<RegistroAlimento> registros = registroalimentoRepository.findById(id);
         return new ResponseEntity<>(registros, HttpStatus.OK);
     }
 
@@ -101,10 +103,10 @@ public class NutriAppController {
     }
 
     @GetMapping("/usuarios/{email}")
-    public ResponseEntity<Usuario> obtenerUsuarioPorEmail(@PathVariable String email) {
+ /*   public ResponseEntity<Usuario> obtenerUsuarioPorEmail(@PathVariable String email) {
         Optional<Usuario> usuario = usuarioRepository.findByUsuario(email);
         return usuario.map(value -> new ResponseEntity<>(value, HttpStatus.OK)).orElseGet(() -> new ResponseEntity<>(HttpStatus.NOT_FOUND));
-    }
+    } */
 
     @PostMapping("/usuarios")
     public ResponseEntity<Usuario> crearUsuario(@RequestBody Usuario usuario) {
@@ -141,11 +143,11 @@ public class NutriAppController {
 
   
   
-@GetMapping("/") // filtro: recibir autenticación -vista: lista
+/*@GetMapping("/") // filtro: recibir autenticación -vista: lista
 @GetMapping("/registro") // crear un nuevo TFG -vista:formulario
 @GetMapping("/nuevoalimento") // editar ese TFG -lee -vista:formulario
 @GetMapping("/habitos") // lista de TFGs -lee todos -vista:lista
-@GetMapping("/nuevo") // aceptar una propuesta TFG -actualiza -vista:lista
+@GetMapping("/nuevo") // aceptar una propuesta TFG -actualiza -vista:lista*/
 }
 
 
