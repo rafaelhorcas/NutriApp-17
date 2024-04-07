@@ -1,26 +1,56 @@
-import java.util.Date;
+package es.isst.model;
 
+import java.util.Date;
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
+
+@Entity
 public class  RegistroAlimento{
 
-@NotEmpty private Int id;
-private Alimento alimento;
-private Double cantidad;
-private Date fecha;
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
+    private Double cantidad;
+    private Date fecha;
 
+    @ManyToOne
+    @JoinColumn(name = "usuario_email")
+    private Usuario usuario; // FK
 
-    public RegistroAlimento(Int id, private Alimento alimento, private Double cantidad, private Date fecha;) {
+    @ManyToOne
+    @JoinColumn(name = "alimento_nombre")
+    private Alimento alimento; // FK
+
+    public RegistroAlimento(Long id, Double cantidad, Date fecha, Alimento alimento, Usuario usuario) {
         this.id = id;
         this.alimento= alimento;
         this.cantidad = cantidad;
         this.fecha = fecha;
+        this.usuario = usuario;
+    }
+
+    public void setCantidad(Double cantidad) {
+        this.cantidad = cantidad;
+    }
+
+    public void setUsuario(Usuario usuario) {
+        this.usuario = usuario;
     }
 
     // Métodos para acceder y modificar los atributos
-    public Int getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setId(Int id) {
+    public Usuario getUsuario() {
+        return usuario;
+    }
+
+    public void setId(Long id) {
         this.id = id;
     }
 

@@ -1,16 +1,20 @@
-import java.util.Date;
+package es.isst.model;
 
+import jakarta.persistence.Entity;
+import jakarta.persistence.Id;
+
+@Entity
 public class Usuario{
 
-@NotEmpty private String email;
-private boolean espremium;
+    @Id private String email;
+    private boolean espremium;
 
 
-    public Usuario(String email,boolean espremium;) {
+    public Usuario(String email, boolean espremium) {
         this.email = email;
         this.espremium = espremium;
     }
-
+    public Usuario(){}
     // Métodos para acceder y modificar los atributos
     public String getEmail() {
         return email;
@@ -33,7 +37,7 @@ private boolean espremium;
     public String toString() {
         return "Usuario{" +
                 "email='" + email + '\'' +
-                ", cantidad=" + cantidad +
+                ", espremium=" + espremium +
                 '}';
     }
 

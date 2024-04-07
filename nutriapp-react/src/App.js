@@ -11,6 +11,7 @@ import Title from './components/Title';
 import BusquedaAlimento from './components/mains/BusquedaAlimento.js';
 import RegistroAlimentos from './components/mains/RegistroAlimentos.js';
 import NuevoAlimento from './components/mains/NuevoAlimento';
+import CrearUsuario from './components/mains/CrearUsuario.js';
 import { mock_alimentos } from './constants/alimentos.js';
 
 import React, { useState, useEffect } from 'react';
@@ -45,6 +46,7 @@ export default function App() {
         <Route path="/busqueda" element={<BusquedaAlimento agregarAlimento={agregarAlimento}/>} /> 
         <Route path="/habitos" element={<Habitos/>} />
         <Route path="/ajustes" element={<Ajustes/>} />
+        <Route path="/crearusuario" element={<CrearUsuario/>} />
       </Routes>
       <Footer/>
     </Container>

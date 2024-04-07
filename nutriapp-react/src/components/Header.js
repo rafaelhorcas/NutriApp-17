@@ -16,6 +16,7 @@ export default function Header () {
             <Nav.Link href="/habitos">Hábitos Alimenticios</Nav.Link>
             <Nav.Link href="/comparativa">Comparativa</Nav.Link>
             <Nav.Link href="/ajustes">Ajustes</Nav.Link>
+            <Nav.Link href="/crearusuario">Crear Usuario</Nav.Link>
           </Nav>
         </Container>
       </Navbar>
