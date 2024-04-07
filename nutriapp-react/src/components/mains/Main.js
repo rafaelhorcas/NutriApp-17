@@ -69,7 +69,7 @@ export default function Main(props){
   const data = {
     labels: ['Ingeridas', 'Restantes'],
     datasets: [{
-      data: CaloriasConsumidas > objetivoCalorias ? [objetivoCalorias, 0] : [CaloriasConsumidas, objetivoCalorias - CaloriasConsumidas],
+      data: CaloriasConsumidas > objetivoCalorias ? [objetivoCalorias, 0] : [CaloriasConsumidas, CaloriasRestantes],
       backgroundColor: ['#1bca63', '#757A76'],
     }],
   };
@@ -81,7 +81,7 @@ export default function Main(props){
       </div>
       <div className='chart-content'>
         <div className="chart">
-          <Pie data={data} />
+          <Pie data={data} options={options}/>
         </div>
         <div className="text">
           <p>Objetivo de calorías: {objetivoCalorias} kcal</p>
