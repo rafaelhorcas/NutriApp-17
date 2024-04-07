@@ -39,115 +39,135 @@ public class NutriAppController {
     this.usuarioRepository = u;  
   }
 
-   
-    @GetMapping("/alimentos")
-    public ResponseEntity<List<Alimento>> obtenerAlimentos() {
-        List<Alimento> alimentos = (List<Alimento>) alimentoRepository.findAll();
-        return new ResponseEntity<>(alimentos, HttpStatus.OK);
+  // FUNCIONES DE USUARIOS
+
+  @GetMapping("/usuarios")
+  public ResponseEntity<List<Usuario>> obtenerUsuarios() {
+      List<Usuario> usuarios = (List<Usuario>) usuarioRepository.findAll();
+      return new ResponseEntity<>(usuarios, HttpStatus.OK);
+  }
+
+  @GetMapping("/usuarios/{email}")
+  public ResponseEntity<Usuario> obtenerUsuarioPorEmail(@PathVariable String email) {
+    Optional<Usuario> usuarioOptional = usuarioRepository.findByEmail(email);
+    if (usuarioOptional.isPresent()) {
+        Usuario usuario = usuarioOptional.get();
+        return new ResponseEntity<>(usuario, HttpStatus.OK);
+    } else {
+        return new ResponseEntity<>(HttpStatus.NOT_FOUND);
     }
-
-    @GetMapping("/alimentos/{nombre}")
-    public ResponseEntity<List<Alimento>> obtenerAlimentosPorNombre(@PathVariable String nombre) {
-        List<Alimento> alimentos = alimentoRepository.findByNombre(nombre);
-        return new ResponseEntity<>(alimentos, HttpStatus.OK);
-    }
-
-    @PostMapping("/alimentos")
-    public ResponseEntity<Alimento> crearAlimento(@RequestBody Alimento alimento) {
-        Alimento nuevoAlimento = alimentoRepository.save(alimento);
-        return new ResponseEntity<>(nuevoAlimento, HttpStatus.CREATED);
-    }
-
-    @DeleteMapping("/alimentos/{id}")
-    public ResponseEntity<String> eliminarAlimento(@PathVariable String id) {
-        if (alimentoRepository.existsById(id)) {
-            alimentoRepository.deleteById(id);
-            return new ResponseEntity<>("Alimento eliminado exitosamente", HttpStatus.OK);
-        } else {
-            return new ResponseEntity<>("El alimento no se encontró", HttpStatus.NOT_FOUND);
-        }
-    }
-
-    @GetMapping("/registrosAlimentos")
-    public ResponseEntity<List<RegistroAlimento>> obtenerRegistrosAlimentos() {
-        List<RegistroAlimento> registros = (List<RegistroAlimento>) registroalimentoRepository.findAll();
-        return new ResponseEntity<>(registros, HttpStatus.OK);
-    }
-
-    @GetMapping("/registrosAlimentos/{id}")
-    public ResponseEntity<List<RegistroAlimento>> obtenerRegistrosAlimentosPorId(@PathVariable Integer id) {
-        List<RegistroAlimento> registros = registroalimentoRepository.findById(id);
-        return new ResponseEntity<>(registros, HttpStatus.OK);
-    }
-
-    @PostMapping("/registrosAlimentos")
-    public ResponseEntity<RegistroAlimento> crearRegistroAlimento(@RequestBody RegistroAlimento registroAlimento) {
-        RegistroAlimento nuevoRegistro = registroalimentoRepository.save(registroAlimento);
-        return new ResponseEntity<>(nuevoRegistro, HttpStatus.CREATED);
-    }
-
-     @DeleteMapping("/registrosAlimentos/{id}")
-    public ResponseEntity<String> eliminarRegistroAlimento(@PathVariable Integer id) {
-        if (registroalimentoRepository.existsById(id)) {
-            registroalimentoRepository.deleteById(id);
-            return new ResponseEntity<>("Registro de alimento eliminado exitosamente", HttpStatus.OK);
-        } else {
-            return new ResponseEntity<>("El registro de alimento no se encontró", HttpStatus.NOT_FOUND);
-        }
-    }
-
-    @GetMapping("/usuarios")
-    public ResponseEntity<List<Usuario>> obtenerUsuarios() {
-        List<Usuario> usuarios = (List<Usuario>) usuarioRepository.findAll();
-        return new ResponseEntity<>(usuarios, HttpStatus.OK);
-    }
-
-    @GetMapping("/usuarios/{email}")
- /*   public ResponseEntity<Usuario> obtenerUsuarioPorEmail(@PathVariable String email) {
-        Optional<Usuario> usuario = usuarioRepository.findByUsuario(email);
-        return usuario.map(value -> new ResponseEntity<>(value, HttpStatus.OK)).orElseGet(() -> new ResponseEntity<>(HttpStatus.NOT_FOUND));
-    } */
-
-    @PostMapping("/usuarios")
-    public ResponseEntity<Usuario> crearUsuario(@RequestBody Usuario usuario) {
-        Usuario nuevoUsuario = usuarioRepository.save(usuario);
-        return new ResponseEntity<>(nuevoUsuario, HttpStatus.CREATED);
-    }
-
-    @DeleteMapping("/usuarios/{email}")
-    public ResponseEntity<String> eliminarUsuario(@PathVariable String email) {
-        if (usuarioRepository.existsById(email)) {
-            usuarioRepository.deleteById(email);
-            return new ResponseEntity<>("Usuario eliminado exitosamente", HttpStatus.OK);
-        } else {
-            return new ResponseEntity<>("El usuario no se encontró", HttpStatus.NOT_FOUND);
-        }
-    }
-
-    /**
-     * @brief Devuelve los elementos RegistroAlimento para un usuario (email) y una fecha (día actual)
-     * @param email Email del usuario
-     * @param fecha Fecha del día actual
-     * @return
-     */
-    @GetMapping("/registroDiario")
-    public List<RegistroAlimento> obtenerAlimentosPorUsuarioYFecha(@RequestParam String email, @RequestParam Date fecha){
-        return registroalimentoRepository.findByUsuarioAndFecha(email, fecha);
-    }
-    
-
-
-
-
-
-
+  }
   
+  @GetMapping("/usuarios/{email}/espremium")
+  public ResponseEntity<Boolean> verificarPremium(@PathVariable String email) {
+      // Buscar el usuario por su nombre de usuario
+      Optional<Usuario> usuarioOptional = usuarioRepository.findByEmail(email);
+      if (!usuarioOptional.isPresent()) {
+          return new ResponseEntity<>(HttpStatus.NOT_FOUND); // Usuario no encontrado
+      }
+      // Verificar si el usuario es premium
+      boolean esPremium = usuarioOptional.get().getEspremium();
+      return new ResponseEntity<>(esPremium, HttpStatus.OK);
+  }
+
+  @PostMapping("/usuarios")
+  public ResponseEntity<Usuario> crearUsuario(@RequestBody Usuario usuario) {
+      Usuario nuevoUsuario = usuarioRepository.save(usuario);
+      return new ResponseEntity<>(nuevoUsuario, HttpStatus.CREATED);
+  }
+
+  @DeleteMapping("/usuarios/{email}")
+  public ResponseEntity<String> eliminarUsuario(@PathVariable String email) {
+      if (usuarioRepository.existsById(email)) {
+          usuarioRepository.deleteById(email);
+          return new ResponseEntity<>("Usuario eliminado exitosamente", HttpStatus.OK);
+      } else {
+          return new ResponseEntity<>("El usuario no se encontró", HttpStatus.NOT_FOUND);
+      }
+  }
+
+  //FUNCIONES DE ALIMENTOS
   
-/*@GetMapping("/") // filtro: recibir autenticación -vista: lista
-@GetMapping("/registro") // crear un nuevo TFG -vista:formulario
-@GetMapping("/nuevoalimento") // editar ese TFG -lee -vista:formulario
-@GetMapping("/habitos") // lista de TFGs -lee todos -vista:lista
-@GetMapping("/nuevo") // aceptar una propuesta TFG -actualiza -vista:lista*/
+  @GetMapping("/alimentos")
+  public ResponseEntity<List<Alimento>> obtenerAlimentos() {
+      List<Alimento> alimentos = (List<Alimento>) alimentoRepository.findAll();
+      return new ResponseEntity<>(alimentos, HttpStatus.OK);
+  }
+
+  @GetMapping("/alimentos/{nombre}")
+  public ResponseEntity<List<Alimento>> obtenerAlimentosPorNombre(@PathVariable String nombre) {
+      List<Alimento> alimentos = alimentoRepository.findByNombre(nombre);
+      return new ResponseEntity<>(alimentos, HttpStatus.OK);
+  }
+
+  @PostMapping("/alimentos")
+  public ResponseEntity<Alimento> crearAlimento(@RequestBody Alimento alimento) {
+      Alimento nuevoAlimento = alimentoRepository.save(alimento);
+      return new ResponseEntity<>(nuevoAlimento, HttpStatus.CREATED);
+  }
+
+  @DeleteMapping("/alimentos/{id}")
+  public ResponseEntity<String> eliminarAlimento(@PathVariable String id) {
+      if (alimentoRepository.existsById(id)) {
+          alimentoRepository.deleteById(id);
+          return new ResponseEntity<>("Alimento eliminado exitosamente", HttpStatus.OK);
+      } else {
+          return new ResponseEntity<>("El alimento no se encontró", HttpStatus.NOT_FOUND);
+      }
+  }
+
+  //FUNCIONES DE REGISTROALIMENTO
+
+  @GetMapping("/registrosAlimentos")
+  public ResponseEntity<List<RegistroAlimento>> obtenerRegistrosAlimentos() {
+      List<RegistroAlimento> registros = (List<RegistroAlimento>) registroalimentoRepository.findAll();
+      return new ResponseEntity<>(registros, HttpStatus.OK);
+  }
+
+  @GetMapping("/registrosAlimentos/{id}")
+  public ResponseEntity<RegistroAlimento> obtenerRegistroAlimentoPorId(@PathVariable Integer id) {
+      Optional<RegistroAlimento> registroAlimentoOptional = registroalimentoRepository.findById(id);
+      if (registroAlimentoOptional.isPresent()) {
+          RegistroAlimento registroAlimento = registroAlimentoOptional.get();
+          return new ResponseEntity<>(registroAlimento, HttpStatus.OK);
+      } else {
+          return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+      }
+  }
+
+   /**
+   * @brief Devuelve los elementos RegistroAlimento para un usuario (email) y una fecha (día actual)
+   * @param email Email del usuario
+   * @param fecha Fecha del día actual
+   * @return
+   */
+  @GetMapping("/registroDiario/{email}")
+  public ResponseEntity<List<RegistroAlimento>> obtenerAlimentosPorUsuarioYFecha(@PathVariable String email, @RequestParam Date fecha) {
+    Optional<Usuario> usuarioOptional = usuarioRepository.findByEmail(email);
+    if (usuarioOptional.isPresent()) {
+        Usuario usuario = usuarioOptional.get();
+        List<RegistroAlimento> registros = registroalimentoRepository.findByUsuarioAndFecha(usuario, fecha);
+        return new ResponseEntity<>(registros, HttpStatus.OK);
+    } else {
+        return new ResponseEntity<>( HttpStatus.NOT_FOUND);
+    }
+}
+  @PostMapping("/registrosAlimentos")
+  public ResponseEntity<RegistroAlimento> crearRegistroAlimento(@RequestBody RegistroAlimento registroAlimento) {
+      RegistroAlimento nuevoRegistro = registroalimentoRepository.save(registroAlimento);
+      return new ResponseEntity<>(nuevoRegistro, HttpStatus.CREATED);
+  }
+
+  @DeleteMapping("/registrosAlimentos/{id}")
+  public ResponseEntity<String> eliminarRegistroAlimento(@PathVariable Integer id) {
+      if (registroalimentoRepository.existsById(id)) {
+          registroalimentoRepository.deleteById(id);
+          return new ResponseEntity<>("Registro de alimento eliminado exitosamente", HttpStatus.OK);
+      } else {
+          return new ResponseEntity<>("El registro de alimento no se encontró", HttpStatus.NOT_FOUND);
+      }
+  }
+
 }
 
 

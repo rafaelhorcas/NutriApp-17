@@ -13,8 +13,8 @@ public class  RegistroAlimento{
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer id;
-    private double cantidad;
+    private Long id;
+    private Double cantidad;
     private Date fecha;
 
     @ManyToOne
@@ -25,19 +25,32 @@ public class  RegistroAlimento{
     @JoinColumn(name = "alimento_nombre")
     private Alimento alimento; // FK
 
-    public RegistroAlimento(Integer id, Alimento alimento, Double cantidad, Date fecha) {
+    public RegistroAlimento(Long id, Double cantidad, Date fecha, Alimento alimento, Usuario usuario) {
         this.id = id;
         this.alimento= alimento;
         this.cantidad = cantidad;
         this.fecha = fecha;
+        this.usuario = usuario;
+    }
+
+    public void setCantidad(Double cantidad) {
+        this.cantidad = cantidad;
+    }
+
+    public void setUsuario(Usuario usuario) {
+        this.usuario = usuario;
     }
 
     // Métodos para acceder y modificar los atributos
-    public Integer getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setId(Integer id) {
+    public Usuario getUsuario() {
+        return usuario;
+    }
+
+    public void setId(Long id) {
         this.id = id;
     }
 

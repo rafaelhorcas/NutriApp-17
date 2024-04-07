@@ -6,8 +6,10 @@ import java.util.Date;
 import org.springframework.data.repository.CrudRepository;
 
 import es.isst.model.RegistroAlimento;
+import es.isst.model.Usuario;
 
 public interface RegistroAlimentoRepository extends CrudRepository<RegistroAlimento, Integer> {
 
-    List<RegistroAlimento> findByUsuarioAndFecha(String email, Date fecha);
+    List<RegistroAlimento> findByUsuarioAndFecha(Usuario usuario, Date fecha);
+
 }

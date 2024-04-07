@@ -7,5 +7,7 @@ import org.springframework.data.repository.CrudRepository;
 import es.isst.model.Alimento;
 
 public interface AlimentoRepository extends CrudRepository<Alimento, String> {
-List<Alimento> findByNombre(String nombre);
+
+    List<Alimento> findByNombre(String nombre);
+
 }
