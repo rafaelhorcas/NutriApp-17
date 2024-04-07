@@ -4,6 +4,7 @@ public class Usuario{
 
 @NotEmpty private String email;
 private boolean espremium;
+private string contrasena;
 
 
     public Usuario(String email,boolean espremium;) {
@@ -27,6 +28,14 @@ private boolean espremium;
         this.espremium = espremium;
     }
 
+    public String getContrasena(){
+        return contrasena;
+    }
+
+    public void setContrasena() {
+        this.contrasena = contrasena;
+    }
+    
 
     // Método para imprimir la información del usuario
     @Override
