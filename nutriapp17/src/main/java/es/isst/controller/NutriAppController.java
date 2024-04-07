@@ -169,7 +169,6 @@ public class NutriAppController {
           return new ResponseEntity<>("El registro de alimento no se encontró", HttpStatus.NOT_FOUND);
       }
   }
-
 }
 
 
