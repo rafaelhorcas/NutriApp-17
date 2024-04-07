@@ -1,11 +1,30 @@
 import '../../App.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
 
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { Table, Button } from 'react-bootstrap';
 
 export default function RegistroAlimentos(props) {
-    
+    const [alimentos, setAlimentos] = useState([]);
+
+    useEffect(() => {
+        const obtenerAlimentos = async () => {
+            try {
+                const response = await fetch(`http://localhost:8080/registroDiario/${props.usuario.email}?fecha=${props.fecha}`);
+                console.log(`http://localhost:8080/registroDiario/${props.usuario.email}?fecha=${props.fecha}`)
+                if (!response.ok) {
+                    throw new Error('Error al obtener alimentos');
+                }
+                const data = await response.json();
+                setAlimentos(data);
+                console.log(data)
+            } catch (error) {
+                console.error('Error al obtener alimentos:', error);
+            }
+        };
+        obtenerAlimentos();
+    }, [props.usuario.email, props.fecha]);
+
     return (
         <div className='main'>
         <h1>Registro de Comidas del día XX/YY/ZZ</h1>
@@ -28,14 +47,14 @@ export default function RegistroAlimentos(props) {
                 </tr>
             </thead>
             <tbody>
-                {props.alimentos.map((alimento, index) => (
+                {alimentos.map((registro, index) => (
                     <tr key={index}>
-                        <td>{alimento.nombre}</td>
-                        <td>{alimento.cantidad}</td>
-                        <td>{alimento.calorias}</td>
-                        <td>{alimento.proteinas}</td>
-                        <td>{alimento.carbohidratos}</td>
-                        <td>{alimento.grasas}</td>
+                        <td>{registro.alimento.nombre}</td>
+                        <td>{registro.cantidad}</td>
+                        <td>{registro.alimento.calorias}</td>
+                        <td>{registro.alimento.proteinas}</td>
+                        <td>{registro.alimento.carbohidratos}</td>
+                        <td>{registro.alimento.grasas}</td>
                     </tr>
                 ))}
             </tbody>

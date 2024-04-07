@@ -1,6 +1,8 @@
 package es.isst.controller;
 
 import java.lang.System.Logger;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 import java.util.Optional;
@@ -144,17 +146,23 @@ public class NutriAppController {
    * @return
    */
   @GetMapping("/registroDiario/{email}")
-  public ResponseEntity<List<RegistroAlimento>> obtenerAlimentosPorUsuarioYFecha(@PathVariable String email, @RequestParam Date fecha) {
+    public ResponseEntity<List<RegistroAlimento>> obtenerAlimentosPorUsuarioYFecha(@PathVariable String email, @RequestParam String fecha) {
+    // Verificar si la fecha está en el formato correcto
+    if (!fecha.matches("\\d{2}-\\d{2}-\\d{4}")) {
+        return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+    }
+
     Optional<Usuario> usuarioOptional = usuarioRepository.findByEmail(email);
     if (usuarioOptional.isPresent()) {
         Usuario usuario = usuarioOptional.get();
         List<RegistroAlimento> registros = registroalimentoRepository.findByUsuarioAndFecha(usuario, fecha);
         return new ResponseEntity<>(registros, HttpStatus.OK);
     } else {
-        return new ResponseEntity<>( HttpStatus.NOT_FOUND);
+        return new ResponseEntity<>(HttpStatus.NOT_FOUND);
     }
 }
-  @PostMapping("/registrosAlimentos")
+  
+  @PostMapping("/registroAlimentos")
   public ResponseEntity<RegistroAlimento> crearRegistroAlimento(@RequestBody RegistroAlimento registroAlimento) {
       RegistroAlimento nuevoRegistro = registroalimentoRepository.save(registroAlimento);
       return new ResponseEntity<>(nuevoRegistro, HttpStatus.CREATED);

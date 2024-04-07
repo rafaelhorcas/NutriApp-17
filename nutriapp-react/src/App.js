@@ -21,13 +21,26 @@ import { Route, Routes, useNavigate } from 'react-router-dom';
 
 
 export default function App() {
-
+  const [fechaActual, setFechaActual] = useState('');
   const [alimentos, setAlimentos] = useState([]);
+  
+  const [usuario, setUsuario] = useState({
+    email: 'admin@admin.es',
+    esPremium: true,
+  });
+  
   let navigate = useNavigate();
 
   useEffect(() => {
-      setAlimentos(mock_alimentos.alimentos);
-    }, []);
+    const today = new Date();
+    const dd = String(today.getDate()).padStart(2, '0');
+    const mm = String(today.getMonth() + 1).padStart(2, '0');
+    const yyyy = today.getFullYear();
+    const formattedDate = `${dd}-${mm}-${yyyy}`; // Formato DD-MM-YYYY
+    setFechaActual(formattedDate);
+    console.log(usuario)
+    console.log(fechaActual)
+  }, []);
 
   const agregarAlimento = (nuevoAlimento) => {
     setAlimentos([...alimentos, nuevoAlimento]);
@@ -40,10 +53,10 @@ export default function App() {
       <Header/>
       <Sidebar/>
       <Routes>
-        <Route path="/" element={<Main/>} />
-        <Route path="/registroalimentos" element={<RegistroAlimentos alimentos={alimentos}/>} />
-        <Route path="/nuevoalimento" element={<NuevoAlimento agregarAlimento={agregarAlimento}/>} />
-        <Route path="/busqueda" element={<BusquedaAlimento agregarAlimento={agregarAlimento}/>} /> 
+        <Route path="/" element={<Main usuario={usuario} fecha={fechaActual}/> } />
+        <Route path="/registroalimentos" element={<RegistroAlimentos alimentos={alimentos} usuario={usuario} fecha={fechaActual}/>} />
+        <Route path="/nuevoalimento" element={<NuevoAlimento agregarAlimento={agregarAlimento} usuario={usuario} fecha={fechaActual}/>} />
+        <Route path="/busqueda" element={<BusquedaAlimento agregarAlimento={agregarAlimento} usuario={usuario} fecha={fechaActual}/>} /> 
         <Route path="/habitos" element={<Habitos/>} />
         <Route path="/ajustes" element={<Ajustes/>} />
         <Route path="/crearusuario" element={<CrearUsuario/>} />
