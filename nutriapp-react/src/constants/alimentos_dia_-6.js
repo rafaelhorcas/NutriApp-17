@@ -1,25 +1,25 @@
 export const mock_alimentos_dia_anterior6 = {
     "alimentos_dia": [
       {
-        "nombre": "Cereales",
+        "nombre": "Avena",
         "kcal_totales": 180,
-        "proteinas_totales": 10,
-        "carbohidratos_totales": 9,
-        "grasas_totales": 18
+        "proteinas_totales": 20,
+        "carbohidratos_totales": 50,
+        "grasas_totales": 0.3
       },
       {
-        "nombre": "Pure de verduras",
-        "kcal_totales": 206,
-        "proteinas_totales": 4,
-        "carbohidratos_totales": 45,
-        "grasas_totales": 0.4
+        "nombre": "Lentejas",
+        "kcal_totales": 400,
+        "proteinas_totales": 18,
+        "carbohidratos_totales": 63,
+        "grasas_totales": 15
       },
       {
-        "nombre": "Hambutguesa de vaca",
-        "kcal_totales": 170,
-        "proteinas_totales": 31,
+        "nombre": "Filete de pollo",
+        "kcal_totales": 150,
+        "proteinas_totales": 35,
         "carbohidratos_totales": 0,
-        "grasas_totales": 3.6
+        "grasas_totales": 1
       },
       {
         "nombre": "Ensalada mixta",
@@ -29,11 +29,11 @@ export const mock_alimentos_dia_anterior6 = {
         "grasas_totales": 5
       },
       {
-        "nombre": "Bocadillo jamon serrano",
-        "kcal_totales": 90,
+        "nombre": "Galletas oreo",
+        "kcal_totales": 200,
         "proteinas_totales": 3,
-        "carbohidratos_totales": 8,
-        "grasas_totales": 5
+        "carbohidratos_totales": 25,
+        "grasas_totales": 15
       },
       {
         "nombre": "Filete de atun",
