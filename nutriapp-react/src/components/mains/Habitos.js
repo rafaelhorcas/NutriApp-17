@@ -1,5 +1,6 @@
 import '../../App.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
+import React, { useState } from 'react';
 
 import { mock_alimentos_dia } from '../../constants/alimentos_dia';
 import { mock_alimentos_dia_anterior1 } from '../../constants/alimentos_dia_-1';
@@ -82,7 +83,12 @@ export default function Habitos(){
     }, 0);
       
     const GrasasMedias = (GrasasConsumidas0 + GrasasConsumidas1 + GrasasConsumidas2 + GrasasConsumidas3 + GrasasConsumidas4)/5;
+    
+    const [showChat, setShowChat] = useState(false);
 
+    const handleToggleChat = () => {
+        setShowChat(!showChat);
+    };
 
     return (
         <div className="text">
@@ -90,7 +96,25 @@ export default function Habitos(){
               <p>Proteinas: {ProteinasMedias} g</p>
               <p>Carbohidratos: {CarbohidratosMedios} g</p>
               <p>Grasas: {GrasasMedias} g</p>
+              <div className="chat-option">
+                <button onClick={handleToggleChat}>Chat con nutricionista</button>
+            </div>
+            {showChat && <ChatWidget />}
         </div>
+        
          
+    );
+}
+
+function ChatWidget() {
+    return (
+        <div className="chat-widget">
+            <div className="chat-message">
+                <p>¡Hola! ¿En qué puedo ayudarte hoy?</p>
+            </div>
+            <div className="chat-response">
+                <p>Se le atenderá en breve.</p>
+            </div>
+        </div>
     );
 }
