@@ -42,7 +42,8 @@ private string contrasena;
     public String toString() {
         return "Usuario{" +
                 "email='" + email + '\'' +
-                ", cantidad=" + cantidad +
+                ", espremium=" + espremium +
+                ", contrasena=" + contrasena +
                 '}';
     }
 
