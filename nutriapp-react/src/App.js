@@ -39,7 +39,6 @@ export default function App() {
     const formattedDate = `${dd}-${mm}-${yyyy}`; // Formato DD-MM-YYYY
     setFechaActual(formattedDate);
     console.log(usuario)
-    console.log(fechaActual)
   }, []);
 
   const agregarAlimento = (nuevoAlimento) => {
