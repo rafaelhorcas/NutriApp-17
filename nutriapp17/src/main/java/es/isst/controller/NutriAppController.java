@@ -200,7 +200,7 @@ public class NutriAppController {
       if (usuarioOptional.isPresent()) {
           Usuario usuario = usuarioOptional.get();
           // Verificar si el usuario es premium
-          if (!usuario.isPremium()) {
+          if (!usuario.getEspremium()) {
               // Si el usuario no es premium, no se devuelve la lista de registros
               return new ResponseEntity<>(HttpStatus.FORBIDDEN);
           }
