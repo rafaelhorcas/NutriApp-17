@@ -188,23 +188,38 @@ public class NutriAppController {
     }
   }
 
-  @GetMapping("/registrosUltimos30Dias/{email}")
-  public ResponseEntity<List<List<RegistroAlimento>>> obtenerRegistrosUltimos30Dias(@PathVariable String email) {
-      // Obtener la fecha actual
-      LocalDate fechaActual = LocalDate.now();
-      // Obtener la fecha 30 días antes
-      LocalDate fecha30DiasAntes = fechaActual.minusDays(30);
+  @GetMapping("/registroMensual/{email}")
+  public ResponseEntity<List<List<RegistroAlimento>>> obtenerAlimentosMensualPorUsuarioYFecha(@PathVariable String email, @RequestParam String fecha) {
+    
+      // Verificar si la fecha está en el formato correcto
+      if (!fecha.matches("\\d{2}-\\d{2}-\\d{4}")) {
+          return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+      }
   
       Optional<Usuario> usuarioOptional = usuarioRepository.findByEmail(email);
       if (usuarioOptional.isPresent()) {
           Usuario usuario = usuarioOptional.get();
-          List<List<RegistroAlimento>> registrosUltimos30Dias = new ArrayList<>();
-          for (LocalDate fecha = fecha30DiasAntes; fecha.isBefore(fechaActual); fecha = fecha.plusDays(1)) {
-              // Obtener los registros para cada día
-              List<RegistroAlimento> registrosDia = registroalimentoRepository.findByUsuarioAndFecha(usuario, fecha.toString());
-              registrosUltimos30Dias.add(registrosDia);
+          // Verificar si el usuario es premium
+          if (!usuario.isPremium()) {
+              // Si el usuario no es premium, no se devuelve la lista de registros
+              return new ResponseEntity<>(HttpStatus.FORBIDDEN);
           }
-          return new ResponseEntity<>(registrosUltimos30Dias, HttpStatus.OK);
+  
+          // Obtenemos fecha 30 días antes
+          DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy");
+          LocalDate fechaActual = LocalDate.parse(fecha, formatter);
+          LocalDate fecha30DiasAntes = fechaActual.minusDays(30);
+          String fechaAnterior = fecha30DiasAntes.format(formatter);
+  
+          // Obtener los registros mensuales
+          List<List<RegistroAlimento>> registrosMensuales = new ArrayList<>();
+          for (LocalDate fechaIterada = fecha30DiasAntes; fechaIterada.isBefore(fechaActual); fechaIterada = fechaIterada.plusDays(1)) {
+              LocalDate fechaSiguiente = fechaIterada.plusDays(1);
+              List<RegistroAlimento> registrosDia = registroAlimentoRepository.findByUsuarioAndFechaBetween(usuario, fechaIterada.format(formatter), fechaSiguiente.format(formatter));
+              registrosMensuales.add(registrosDia);
+          }
+  
+          return new ResponseEntity<>(registrosMensuales, HttpStatus.OK);
       } else {
           return new ResponseEntity<>(HttpStatus.NOT_FOUND);
       }
