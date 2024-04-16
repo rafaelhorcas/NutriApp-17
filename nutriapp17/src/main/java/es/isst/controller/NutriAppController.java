@@ -188,6 +188,28 @@ public class NutriAppController {
     }
   }
 
+  @GetMapping("/registrosUltimos30Dias/{email}")
+  public ResponseEntity<List<List<RegistroAlimento>>> obtenerRegistrosUltimos30Dias(@PathVariable String email) {
+      // Obtener la fecha actual
+      LocalDate fechaActual = LocalDate.now();
+      // Obtener la fecha 30 días antes
+      LocalDate fecha30DiasAntes = fechaActual.minusDays(30);
+  
+      Optional<Usuario> usuarioOptional = usuarioRepository.findByEmail(email);
+      if (usuarioOptional.isPresent()) {
+          Usuario usuario = usuarioOptional.get();
+          List<List<RegistroAlimento>> registrosUltimos30Dias = new ArrayList<>();
+          for (LocalDate fecha = fecha30DiasAntes; fecha.isBefore(fechaActual); fecha = fecha.plusDays(1)) {
+              // Obtener los registros para cada día
+              List<RegistroAlimento> registrosDia = registroalimentoRepository.findByUsuarioAndFecha(usuario, fecha.toString());
+              registrosUltimos30Dias.add(registrosDia);
+          }
+          return new ResponseEntity<>(registrosUltimos30Dias, HttpStatus.OK);
+      } else {
+          return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+      }
+  }
+
   @PostMapping("/registroAlimentos")
   public ResponseEntity<RegistroAlimento> crearRegistroAlimento(@RequestBody RegistroAlimento registroAlimento) {
       RegistroAlimento nuevoRegistro = registroalimentoRepository.save(registroAlimento);
