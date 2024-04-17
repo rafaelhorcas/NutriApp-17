@@ -5,6 +5,7 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Optional;
@@ -215,7 +216,7 @@ public class NutriAppController {
           List<List<RegistroAlimento>> registrosMensuales = new ArrayList<>();
           for (LocalDate fechaIterada = fecha30DiasAntes; fechaIterada.isBefore(fechaActual); fechaIterada = fechaIterada.plusDays(1)) {
               LocalDate fechaSiguiente = fechaIterada.plusDays(1);
-              List<RegistroAlimento> registrosDia = registroAlimentoRepository.findByUsuarioAndFechaBetween(usuario, fechaIterada.format(formatter), fechaSiguiente.format(formatter));
+              List<RegistroAlimento> registrosDia = registroalimentoRepository.findByUsuarioAndFechaBetween(usuario, fechaIterada.format(formatter), fechaSiguiente.format(formatter));
               registrosMensuales.add(registrosDia);
           }
   
