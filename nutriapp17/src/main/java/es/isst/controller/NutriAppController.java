@@ -191,7 +191,6 @@ public class NutriAppController {
 
   @GetMapping("/registroMensual/{email}")
   public ResponseEntity<List<List<RegistroAlimento>>> obtenerAlimentosMensualPorUsuarioYFecha(@PathVariable String email, @RequestParam String fecha) {
-    
       // Verificar si la fecha está en el formato correcto
       if (!fecha.matches("\\d{2}-\\d{2}-\\d{4}")) {
           return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
@@ -206,17 +205,17 @@ public class NutriAppController {
               return new ResponseEntity<>(HttpStatus.FORBIDDEN);
           }
   
-          // Obtenemos fecha 30 días antes
+          // Obtener fecha 30 días antes
           DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy");
           LocalDate fechaActual = LocalDate.parse(fecha, formatter);
           LocalDate fecha30DiasAntes = fechaActual.minusDays(30);
-          String fechaAnterior = fecha30DiasAntes.format(formatter);
   
           // Obtener los registros mensuales
           List<List<RegistroAlimento>> registrosMensuales = new ArrayList<>();
-          for (LocalDate fechaIterada = fecha30DiasAntes; fechaIterada.isBefore(fechaActual); fechaIterada = fechaIterada.plusDays(1)) {
+          for (int i = 0; i < 30; i++) {
+              LocalDate fechaIterada = fecha30DiasAntes.plusDays(i);
               LocalDate fechaSiguiente = fechaIterada.plusDays(1);
-              List<RegistroAlimento> registrosDia = registroalimentoRepository.findByUsuarioAndFechaBetween(usuario, fechaIterada.format(formatter), fechaSiguiente.format(formatter));
+              List<RegistroAlimento> registrosDia = registroalimentoRepository.findByUsuarioAndFechaBetween(usuario, fechaIterada.format(formatter), fechaSiguiente.minusDays(1).format(formatter)); // Ajuste aquí para incluir solo el día específico
               registrosMensuales.add(registrosDia);
           }
   
