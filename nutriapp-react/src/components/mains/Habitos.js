@@ -6,6 +6,9 @@ import ReactApexChart from 'react-apexcharts'; //npm install react-apexcharts
 export default function Habitos(props){
 
     const [alimentos, setAlimentos] = useState([]);
+    const [fechaSeleccionada, setFechaSeleccionada] = useState('');
+    const [alimentosDiario, setAlimentosDiario] = useState([]);
+    const [error, setError] = useState(null);
 
     //Peticiones API REST
     useEffect(() => {
@@ -26,6 +29,35 @@ export default function Habitos(props){
     
         obtenerAlimentos();
       }, [props.usuario.email, props.fecha]);
+
+      useEffect(() => {
+        const obtenerAlimentosDiario = async () => {
+          try {
+            if (!fechaSeleccionada) return; // Si no hay fecha seleccionada, no hacemos la solicitud
+            const fechaFormateada = formatFecha(fechaSeleccionada);
+            const url = `http://localhost:8080/registroDiario/${props.usuario.email}?fecha=${fechaFormateada}`;
+            const response = await fetch(url);
+            if (!response.ok) {
+              throw new Error('Error al obtener alimentos');
+            }
+            const data = await response.json();
+            setAlimentosDiario(data);
+            setError('');
+          } catch (error) {
+            console.error('Error al obtener alimentos:', error);
+            setError('Error al obtener alimentos');
+          }
+        };
+    
+        obtenerAlimentosDiario();
+      }, [props.usuario.email, fechaSeleccionada]);
+
+      console.log(alimentosDiario)
+    
+      const handleFechaChange = (event) => {
+        setFechaSeleccionada(event.target.value);
+      };
+      
 
     // Calcular la suma de calorías de cada día
     const sumCaloriasPorDia = alimentos.map((registrosDia) =>
@@ -60,7 +92,7 @@ export default function Habitos(props){
       props.fecha.split("-").reverse().join("-")
     );
     const fechaMenosTreintaDate = new Date(fechaActualDate);
-    fechaMenosTreintaDate.setDate(fechaActualDate.getDate() - 29);
+    fechaMenosTreintaDate.setDate(fechaActualDate.getDate() - 30);
 
     // Crear un array con los últimos 30 días
     const ultimosTreintaDias = [];
@@ -70,7 +102,14 @@ export default function Habitos(props){
       fechaActual.setDate(fechaActual.getDate() + 1);
     }
 
-    ultimosTreintaDias.push(fechaActualDate.getDate());
+    // Función para formatear la fecha
+    const formatFecha = (fecha) => {
+      const partes = fecha.split('-');
+      const fechaFormateada = `${partes[2]}-${partes[1]}-${partes[0]}`;
+      return fechaFormateada;
+    };
+
+    //ultimosTreintaDias.push(fechaActualDate.getDate());
     const mediacalorias = Array(30).fill(2400);
     const mediaproteinas = Array(30).fill(50);
     const mediagrasas = Array(30).fill(50);
@@ -374,6 +413,30 @@ export default function Habitos(props){
               <ReactApexChart options={optionsgrasas} series={seriesgrasas} type="line" height={350} />
               <ReactApexChart options={optionscarbohidratos} series={seriescarbohidratos} type="line" height={350} />
             </div>
+            <div>
+            <div>
+              <input
+                type="date"
+                value={fechaSeleccionada}
+                onChange={handleFechaChange}
+              />
+            </div>
+            {error && <p>{error}</p>}
+            <div>
+              <h2>Alimentos del día {fechaSeleccionada}:</h2>
+              <ul>
+                {alimentosDiario.map((alimento, index) => (
+                  <li key={index}>
+                    <p>Nombre: {alimento.alimento.nombre}</p>
+                    <p>Calorías: {alimento.alimento.calorias}</p>
+                    <p>Proteínas: {alimento.alimento.proteinas}</p>
+                    <p>Grasas: {alimento.alimento.grasas}</p>
+                    <p>Carbohidratos: {alimento.alimento.carbohidratos}</p>
+                  </li>
+                ))}
+              </ul>
+            </div>
+          </div>
             <div className="chat-option">
               <button onClick={handleToggleChat}>Chat con nutricionista</button>
             </div>
@@ -400,3 +463,4 @@ function ChatWidget() {
     );
     
 }
+
