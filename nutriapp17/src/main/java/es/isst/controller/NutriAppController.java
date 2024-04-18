@@ -215,7 +215,7 @@ public class NutriAppController {
           for (int i = 0; i < 30; i++) {
               LocalDate fechaIterada = fecha30DiasAntes.plusDays(i);
               LocalDate fechaSiguiente = fechaIterada.plusDays(1);
-              List<RegistroAlimento> registrosDia = registroalimentoRepository.findByUsuarioAndFechaBetween(usuario, fechaIterada.format(formatter), fechaSiguiente.minusDays(1).format(formatter)); // Ajuste aquí para incluir solo el día específico
+              List<RegistroAlimento> registrosDia = registroalimentoRepository.findByUsuarioAndFechaBetween(usuario, fechaIterada.format(formatter), fechaSiguiente.minusDays(1).format(formatter)); 
               registrosMensuales.add(registrosDia);
           }
   
