@@ -12,6 +12,7 @@ import BusquedaAlimento from './components/mains/BusquedaAlimento.js';
 import RegistroAlimentos from './components/mains/RegistroAlimentos.js';
 import NuevoAlimento from './components/mains/NuevoAlimento';
 import CrearUsuario from './components/mains/CrearUsuario.js';
+import Comparativa from './components/mains/Comparativa.js';
 import { mock_alimentos } from './constants/alimentos.js';
 
 import React, { useState, useEffect } from 'react';
@@ -59,6 +60,7 @@ export default function App() {
         <Route path="/habitos" element={<Habitos usuario={usuario} fecha={fechaActual}/>} />
         <Route path="/ajustes" element={<Ajustes/>} />
         <Route path="/crearusuario" element={<CrearUsuario/>} />
+        <Route path="/comparativa" element={<Comparativa/>} />
       </Routes>
       <Footer/>
     </Container>
