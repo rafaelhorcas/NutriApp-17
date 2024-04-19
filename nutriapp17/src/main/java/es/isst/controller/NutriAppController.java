@@ -3,6 +3,9 @@ package es.isst.controller;
 import java.lang.System.Logger;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Optional;
@@ -146,7 +149,7 @@ public class NutriAppController {
    * @return
    */
   @GetMapping("/registroDiario/{email}")
-    public ResponseEntity<List<RegistroAlimento>> obtenerAlimentosPorUsuarioYFecha(@PathVariable String email, @RequestParam String fecha) {
+  public ResponseEntity<List<RegistroAlimento>> obtenerAlimentosPorUsuarioYFecha(@PathVariable String email, @RequestParam String fecha) {
     // Verificar si la fecha está en el formato correcto
     if (!fecha.matches("\\d{2}-\\d{2}-\\d{4}")) {
         return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
@@ -160,8 +163,68 @@ public class NutriAppController {
     } else {
         return new ResponseEntity<>(HttpStatus.NOT_FOUND);
     }
-}
+  }
   
+  @GetMapping("/registroSemanal/{email}")
+  public ResponseEntity<List<RegistroAlimento>> obtenerAlimentosSemanaPorUsuarioYFecha(@PathVariable String email, @RequestParam String fecha) {
+
+    // Verificar si la fecha está en el formato correcto
+    if (!fecha.matches("\\d{2}-\\d{2}-\\d{4}")) {
+        return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+    }
+    // Obtenemos fecha 7 dias antes
+    DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy");
+    LocalDate fechaActual = LocalDate.parse(fecha, formatter);
+    LocalDate fecha7DiasAntes = fechaActual.minusDays(7);
+    String fechaAnterior = fecha7DiasAntes.format(formatter);
+    
+
+    Optional<Usuario> usuarioOptional = usuarioRepository.findByEmail(email);
+    if (usuarioOptional.isPresent()) {
+        Usuario usuario = usuarioOptional.get();
+        List<RegistroAlimento> registros = registroalimentoRepository.findByUsuarioAndFechaBetween(usuario, fechaAnterior, fecha);
+        return new ResponseEntity<>(registros, HttpStatus.OK);
+    } else {
+        return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+    }
+  }
+
+  @GetMapping("/registroMensual/{email}")
+  public ResponseEntity<List<List<RegistroAlimento>>> obtenerAlimentosMensualPorUsuarioYFecha(@PathVariable String email, @RequestParam String fecha) {
+      // Verificar si la fecha está en el formato correcto
+      if (!fecha.matches("\\d{2}-\\d{2}-\\d{4}")) {
+          return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+      }
+  
+      Optional<Usuario> usuarioOptional = usuarioRepository.findByEmail(email);
+      if (usuarioOptional.isPresent()) {
+          Usuario usuario = usuarioOptional.get();
+          // Verificar si el usuario es premium
+          if (!usuario.getEspremium()) {
+              // Si el usuario no es premium, no se devuelve la lista de registros
+              return new ResponseEntity<>(HttpStatus.FORBIDDEN);
+          }
+  
+          // Obtener fecha 30 días antes
+          DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy");
+          LocalDate fechaActual = LocalDate.parse(fecha, formatter);
+          LocalDate fecha30DiasAntes = fechaActual.minusDays(30);
+  
+          // Obtener los registros mensuales
+          List<List<RegistroAlimento>> registrosMensuales = new ArrayList<>();
+          for (int i = 0; i < 30; i++) {
+              LocalDate fechaIterada = fecha30DiasAntes.plusDays(i);
+              LocalDate fechaSiguiente = fechaIterada.plusDays(1);
+              List<RegistroAlimento> registrosDia = registroalimentoRepository.findByUsuarioAndFechaBetween(usuario, fechaIterada.format(formatter), fechaSiguiente.minusDays(1).format(formatter)); 
+              registrosMensuales.add(registrosDia);
+          }
+  
+          return new ResponseEntity<>(registrosMensuales, HttpStatus.OK);
+      } else {
+          return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+      }
+  }
+
   @PostMapping("/registroAlimentos")
   public ResponseEntity<RegistroAlimento> crearRegistroAlimento(@RequestBody RegistroAlimento registroAlimento) {
       RegistroAlimento nuevoRegistro = registroalimentoRepository.save(registroAlimento);

@@ -39,7 +39,6 @@ export default function App() {
     const formattedDate = `${dd}-${mm}-${yyyy}`; // Formato DD-MM-YYYY
     setFechaActual(formattedDate);
     console.log(usuario)
-    console.log(fechaActual)
   }, []);
 
   const agregarAlimento = (nuevoAlimento) => {
@@ -57,7 +56,7 @@ export default function App() {
         <Route path="/registroalimentos" element={<RegistroAlimentos alimentos={alimentos} usuario={usuario} fecha={fechaActual}/>} />
         <Route path="/nuevoalimento" element={<NuevoAlimento agregarAlimento={agregarAlimento} usuario={usuario} fecha={fechaActual}/>} />
         <Route path="/busqueda" element={<BusquedaAlimento agregarAlimento={agregarAlimento} usuario={usuario} fecha={fechaActual}/>} /> 
-        <Route path="/habitos" element={<Habitos/>} />
+        <Route path="/habitos" element={<Habitos usuario={usuario} fecha={fechaActual}/>} />
         <Route path="/ajustes" element={<Ajustes/>} />
         <Route path="/crearusuario" element={<CrearUsuario/>} />
       </Routes>

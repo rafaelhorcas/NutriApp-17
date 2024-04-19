@@ -127,7 +127,7 @@ export default function NuevoAlimento(props) {
           </Col>
         </Form.Group>
         
-        <Button variant="success" type="submit">Añadir</Button>
+        <Button variant="success" type="submit" onClick={handleSubmit}>Añadir</Button>
       </Form>
     </div>
   );
