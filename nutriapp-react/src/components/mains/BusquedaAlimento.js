@@ -51,7 +51,7 @@ export default function NuevoAlimento(props) {
             <Row xs={1} md={2} lg={3} className="g-4">
               {searchResults.map(product => (
                 <Col key={product.code}>
-                  <Card>
+                  <Card className="custom-card">
                     <Card.Img variant="top" src={product.image_url} />
                     <Card.Body>
                       <Card.Title>{product.product_name}</Card.Title>

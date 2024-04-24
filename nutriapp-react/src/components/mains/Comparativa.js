@@ -5,7 +5,6 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import React, { useState } from 'react';
 import { Form, Row, Col, Button, Card, DropdownButton, Dropdown } from 'react-bootstrap';
 import { useNavigate } from 'react-router-dom';
-import './NuevoAlimento.css'; // Archivo de estilos CSS personalizados
 
 export default function NuevoAlimento(props) {
     const [nombre, setNombre] = useState('');
@@ -85,9 +84,7 @@ export default function NuevoAlimento(props) {
                                         <Card.Text className={highlightNutrients(nutriments.proteins, 'proteins')}>Proteínas: {nutriments.proteins} g</Card.Text>
                                         <Card.Text className={highlightNutrients(nutriments.carbohydrates, 'carbohydrates')}>Carbohidratos: {nutriments.carbohydrates} g</Card.Text>
                                         <Card.Text className={highlightNutrients(nutriments.fat, 'fat')}>Grasas: {nutriments.fat} g</Card.Text>
-                                        <Button variant="danger" onClick={() => handleSelectProduct({ code })}>
-                                            Quitar de Comparación
-                                        </Button>
+                                        <Button variant="danger" onClick={() => handleSelectProduct({ code })}>Quitar de Comparación</Button>
                                     </Card.Body>
                                 </Card>
                             </Col>
