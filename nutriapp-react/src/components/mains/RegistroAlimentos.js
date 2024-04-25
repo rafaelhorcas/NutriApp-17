@@ -63,6 +63,8 @@ export default function RegistroAlimentos(props) {
             </tbody>
         </Table>
     </div>
+
+}
 export default function RegistroAlimentos({ usuario, fecha }) {
   const [historialComidas, setHistorialComidas] = useState([]);
 
@@ -94,6 +96,13 @@ export default function RegistroAlimentos({ usuario, fecha }) {
     </div>
   );
 }
+
+
+
+
+
+
+
 
 
 
