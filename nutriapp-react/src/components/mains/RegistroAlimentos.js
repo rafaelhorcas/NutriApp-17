@@ -65,46 +65,7 @@ export default function RegistroAlimentos(props) {
     </div>
 
     );
-export default function RegistroAlimentos({ usuario, fecha }) {
-  const [historialComidas, setHistorialComidas] = useState([]);
 
-  const handleShowHistory = async () => {
-    try {
-      const response = await fetch(`URL_DE_TU_API_PARA_OBTENER_HISTORIAL_DE_COMIDAS?usuario=${usuario}&fecha=${fecha}`);
-      if (!response.ok) {
-        throw new Error('Error al obtener historial de comidas');
-      }
-      const data = await response.json();
-      setHistorialComidas(data.historial || []);
-    } catch (error) {
-      console.error('Error:', error);
-    }
-  };
-
-  return (
-    <div>
-      <Button onClick={handleShowHistory}>Mostrar Historial de Comidas</Button>
-      {historialComidas.map((comida, index) => (
-        <div key={index}>
-          <p>{comida.nombre}</p>
-          <p>Calorías: {comida.calorias}</p>
-          <p>Proteínas: {comida.proteinas}</p>
-          <p>Carbohidratos: {comida.carbohidratos}</p>
-          <p>Grasas: {comida.grasas}</p>
-        </div>
-      ))}
-    </div>
-  );
-}
-
-
-
-
-
-
-
-
-}
 
 
 
