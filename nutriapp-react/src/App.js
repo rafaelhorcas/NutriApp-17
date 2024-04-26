@@ -54,7 +54,7 @@ export default function App() {
       <Sidebar/>
       <Routes>
         <Route path="/" element={<Main usuario={usuario} fecha={fechaActual}/> } />
-        <Route path="/registroalimentos" element={<RegistroAlimentos alimentos={alimentos} usuario={usuario} fecha={fechaActual}/>} />
+        <Route path="/registroalimentos/*" element={<RegistroAlimentos alimentos={alimentos} usuario={usuario} fecha={fechaActual}/>} />
         <Route path="/nuevoalimento" element={<NuevoAlimento agregarAlimento={agregarAlimento} usuario={usuario} fecha={fechaActual}/>} />
         <Route path="/busqueda" element={<BusquedaAlimento agregarAlimento={agregarAlimento} usuario={usuario} fecha={fechaActual}/>} /> 
         <Route path="/habitos" element={<Habitos usuario={usuario} fecha={fechaActual}/>} />
