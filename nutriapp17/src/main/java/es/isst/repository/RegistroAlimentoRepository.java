@@ -1,6 +1,7 @@
 package es.isst.repository;
 
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.data.repository.CrudRepository;
 
@@ -11,4 +12,5 @@ public interface RegistroAlimentoRepository extends CrudRepository<RegistroAlime
 
     List<RegistroAlimento> findByUsuarioAndFecha(Usuario usuario, String fecha);
     List<RegistroAlimento> findByUsuarioAndFechaBetween(Usuario usuario, String fecha, String fechaActual);
+    Optional <RegistroAlimento> findById(Long id);
 }
