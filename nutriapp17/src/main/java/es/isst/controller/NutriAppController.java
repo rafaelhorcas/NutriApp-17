@@ -231,6 +231,26 @@ public class NutriAppController {
       return new ResponseEntity<>(nuevoRegistro, HttpStatus.CREATED);
   }
 
+ @PutMapping("/registroAlimentos/{id}")
+  public ResponseEntity<String> actualizarCantidadRegistroAlimento(@PathVariable Long id, @RequestBody Double cantidad) {
+
+    System.out.println("Registro de alimento encontrado: " + cantidad);
+    Optional<RegistroAlimento> registroAlimentoOptional = registroalimentoRepository.findById(id); // Buscar el registro de alimento por su ID
+    
+      if (!registroAlimentoOptional.isPresent()) { // Verifica si el objeto está presente en el Optional
+         return new ResponseEntity<>("El registro de alimento no se encontró", HttpStatus.NOT_FOUND);
+      }
+    
+      RegistroAlimento registroAlimento = registroAlimentoOptional.get(); // Obtiene el objeto RegistroAlimento del Optional
+      // Actualizar el atributo cantidad del registro de alimento con el nuevo valor
+      registroAlimento.setCantidad(cantidad);
+        
+      // Guardar los cambios en la base de datos
+      registroalimentoRepository.save(registroAlimento);
+    
+      return new ResponseEntity<>("Cantidad del registro de alimento actualizada exitosamente", HttpStatus.OK); 
+}
+
   @DeleteMapping("/registrosAlimentos/{id}")
   public ResponseEntity<String> eliminarRegistroAlimento(@PathVariable Integer id) {
       if (registroalimentoRepository.existsById(id)) {
