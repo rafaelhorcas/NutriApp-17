@@ -33,7 +33,8 @@ export default function RegistroAlimentos(props) {
         <h1>Registro de Comidas del día {props.fecha}</h1>
         <div className='botones'>
             <Button variant="success" href="/busqueda">Rúsqueda de alimentos</Button> 
-            <Button variant="success" href="/nuevoalimento">Añadir nuevo alimento</Button> 
+            <Button variant="success" href="/nuevoalimento">Añadir nuevo alimento</Button>
+            <Button variant="success" href="/registrohistorico">Todos tus registros</Button>
         </div>
         <div id="encabezado-tabla"> 
             <h2>Lista de Alimentos</h2>
