@@ -226,6 +226,19 @@ public class NutriAppController {
       }
   }
 
+  @GetMapping("/registroHistorico/{email}")
+  public ResponseEntity<List<RegistroAlimento>> obtenerAlimentosPorUsuario(@PathVariable String email) {
+    
+    Optional<Usuario> usuarioOptional = usuarioRepository.findByEmail(email);
+    if (usuarioOptional.isPresent()) {
+        Usuario usuario = usuarioOptional.get();
+        List<RegistroAlimento> registros = registroalimentoRepository.findByUsuario(usuario);
+        return new ResponseEntity<>(registros, HttpStatus.OK);
+    } else {
+        return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+    }
+  }
+
   @PostMapping("/registroAlimentos")
   public ResponseEntity<RegistroAlimento> crearRegistroAlimento(@RequestBody RegistroAlimento registroAlimento) {
       RegistroAlimento nuevoRegistro = registroalimentoRepository.save(registroAlimento);
