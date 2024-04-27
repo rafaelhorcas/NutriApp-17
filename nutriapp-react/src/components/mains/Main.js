@@ -1,10 +1,11 @@
 import '../../App.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
-import { Chart as ChartJS, ArcElement, Tooltip, Legend } from 'chart.js';
-import { mock_alimentos_dia } from '../../constants/alimentos_dia';
-import { Pie } from 'react-chartjs-2';
+import 'react-toastify/dist/ReactToastify.css';
 import { useEffect, useState } from 'react';
 import Form from 'react-bootstrap/Form';
+import { Chart as ChartJS, ArcElement, Tooltip, Legend } from 'chart.js';
+import { ToastContainer, toast } from 'react-toastify';
+import { Pie } from 'react-chartjs-2';
 
 ChartJS.register(ArcElement, Tooltip, Legend);
 
@@ -33,7 +34,8 @@ export default function Main(props){
 
   const [alimentos, setAlimentos] = useState([]);
   const [activo, setActivo] = useState(false);
-  const [objetivoCalorias, setObjetivoCalorias] = useState(2400); // Valor inicial
+  const [objetivoCalorias, setObjetivoCalorias] = useState(2400);
+  const [CaloriasConsumidas, setCaloriasConsumidas] = useState(0);
 
   //Peticiones API REST segun el ckeckbox
   useEffect(() => {
@@ -54,9 +56,34 @@ export default function Main(props){
         console.error('Error al obtener alimentos:', error);
       }
     };
-
     obtenerAlimentos();
   }, [props.usuario.email, props.fecha, activo]);
+
+  //Calculo de caloriasConsumidas
+  useEffect(() => {
+    const caloriasConsumidas = alimentos.reduce((totalKcal, alimento) => {
+      return totalKcal + alimento.alimento.calorias;
+    }, 0);
+    setCaloriasConsumidas(caloriasConsumidas);
+  }, [alimentos]);
+
+  // Notificación de objetivo conseguido
+  useEffect(() => {
+    const caloriasobjetivo = () => toast.success('Felicidades!! Has cumplido tu meta diaria de calorías', {
+      position: "top-right",
+      autoClose: 5000,
+      hideProgressBar: false,
+      closeOnClick: true,
+      pauseOnHover: true,
+      draggable: true,
+      progress: undefined,
+      theme: "colored ",
+      });;
+      if (CaloriasConsumidas >= objetivoCalorias) {
+        caloriasobjetivo();
+      }
+    }, [ objetivoCalorias]);
+  
 
   // Funcion que cambia el estado del checkbox
   const handleClick = () => {
@@ -64,9 +91,6 @@ export default function Main(props){
   };
 
   //Funciones para sumar los valores nutricionales
-  const CaloriasConsumidas = alimentos.reduce((totalKcal, alimento) => {
-    return totalKcal + alimento.alimento.calorias;
-  }, 0);
   const CaloriasRestantes = objetivoCalorias - CaloriasConsumidas;
 
   const sumaProteinasTotales = alimentos.reduce((totalProteinas, alimento) => {
@@ -105,6 +129,7 @@ export default function Main(props){
   
   return (
     <div className='main'>
+      <ToastContainer position="top-right" autoClose={5000} hideProgressBar={false} newestOnTop={false} closeOnClick rtl={false} pauseOnFocusLoss draggable pauseOnHover theme="colored" />
       <div id='chart-header'>
         <h3>Resumen {activo ? ` semanal del ${formatDate(fechaMenosSieteDate)} al ${formatDate(fechaActualDate)}` : ` diario del ${props.fecha}`}</h3>
       </div>
