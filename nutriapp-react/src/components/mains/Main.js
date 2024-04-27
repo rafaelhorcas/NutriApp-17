@@ -2,7 +2,7 @@ import '../../App.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import 'react-toastify/dist/ReactToastify.css';
 import { useEffect, useState } from 'react';
-import Form from 'react-bootstrap/Form';
+import { Form, Button } from 'react-bootstrap';
 import { Chart as ChartJS, ArcElement, Tooltip, Legend } from 'chart.js';
 import { ToastContainer, toast } from 'react-toastify';
 import { Pie } from 'react-chartjs-2';
@@ -34,8 +34,9 @@ export default function Main(props){
 
   const [alimentos, setAlimentos] = useState([]);
   const [activo, setActivo] = useState(false);
-  const [objetivoCalorias, setObjetivoCalorias] = useState(2400);
-  const [CaloriasConsumidas, setCaloriasConsumidas] = useState(0);
+  const [objetivoCalorias, setObjetivoCalorias] = useState();
+  const [CaloriasConsumidas, setCaloriasConsumidas] = useState();
+  const [inputObjetivoCalorias, setInputObjetivoCalorias] = useState(); 
 
   //Peticiones API REST segun el ckeckbox
   useEffect(() => {
@@ -67,7 +68,7 @@ export default function Main(props){
     setCaloriasConsumidas(caloriasConsumidas);
   }, [alimentos]);
 
-  // Notificación de objetivo conseguido
+  // Notificaciones de objetivo de calorias diarias
   useEffect(() => {
     const objetivoCumplido = () => toast.success('Felicidades!! Has cumplido tu meta diaria de calorías', {
       position: "top-center",
@@ -89,13 +90,22 @@ export default function Main(props){
       progress: undefined,
       theme: "colored ",
       });;
-    if (CaloriasConsumidas >= objetivoCalorias) {
-      objetivoCumplido();
-    } else if (CaloriasRestantes > 0) {
-      objetivoNoCumplido();
+    if (objetivoCalorias != 0){
+      if (CaloriasConsumidas >= objetivoCalorias) {
+        console.log(CaloriasConsumidas, "caso cumplido");
+        objetivoCumplido();
+      } else if (CaloriasRestantes > 0) {
+        console.log(CaloriasConsumidas, "caso no cumplido");
+        objetivoNoCumplido();
+      }
     }
-    }, [ objetivoCalorias]);
+  }, [objetivoCalorias, CaloriasConsumidas]);
   
+  // Funcion que cambia el objetivo de calorias
+  const handleSubmit = (e) => {
+    e.preventDefault(); 
+    setObjetivoCalorias(inputObjetivoCalorias);
+  };
 
   // Funcion que cambia el estado del checkbox
   const handleClick = () => {
@@ -117,11 +127,14 @@ export default function Main(props){
     return totalGrasas + alimento.alimento.grasas;
   }, 0);
 
+  // Calculamos el objetivo del gráfico dependiendo de si estamos viendo los datos de forma diaria o semanal
+  const objetivoGrafico = !activo ? objetivoCalorias : objetivoCalorias * 7;
+
   //Fuente de datos del gráfico
   const data = {
     labels: ['Ingeridas', 'Restantes'],
     datasets: [{
-      data: CaloriasConsumidas > objetivoCalorias ? [objetivoCalorias, 0] : [CaloriasConsumidas, CaloriasRestantes],
+      data: CaloriasConsumidas > objetivoGrafico ? [objetivoGrafico, 0] : [CaloriasConsumidas, objetivoGrafico - CaloriasConsumidas],
       backgroundColor: ['#1bca63', '#757A76'],
     }],
   };
@@ -151,10 +164,11 @@ export default function Main(props){
         </div>
         <div className="text">
           <div className='form-column'>
-            <Form>
+            <Form onSubmit={handleSubmit} >
               <Form.Check type="switch" id="interruptor" label="Diario/Semanal" checked={activo} onChange={handleClick}/>
-              <Form.Range  value={objetivoCalorias} onChange={(e) => setObjetivoCalorias(parseInt(e.target.value))} min={1000} max={5000} step={100} />
-              <p>Objetivo de calorías: {objetivoCalorias} kcal</p>
+              <Form.Range value={inputObjetivoCalorias} onChange={(e) => setInputObjetivoCalorias(parseInt(e.target.value))} min={1000} max={5000} step={100} />
+              <p>Objetivo de calorías: {inputObjetivoCalorias} kcal</p>
+              <Button variant="success" type="submit">Establecer</Button>
             </Form>
           </div>
           <div className='metrics-column'>
