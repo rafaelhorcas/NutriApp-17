@@ -69,9 +69,9 @@ export default function Main(props){
 
   // Notificación de objetivo conseguido
   useEffect(() => {
-    const caloriasobjetivo = () => toast.success('Felicidades!! Has cumplido tu meta diaria de calorías', {
-      position: "top-right",
-      autoClose: 5000,
+    const objetivoCumplido = () => toast.success('Felicidades!! Has cumplido tu meta diaria de calorías', {
+      position: "top-center",
+      autoClose: 8000,
       hideProgressBar: false,
       closeOnClick: true,
       pauseOnHover: true,
@@ -79,9 +79,21 @@ export default function Main(props){
       progress: undefined,
       theme: "colored ",
       });;
-      if (CaloriasConsumidas >= objetivoCalorias) {
-        caloriasobjetivo();
-      }
+    const objetivoNoCumplido = () => toast.error('Vaya... Todavía no has alcanzado tu meta de calorías diarias', {
+      position: "top-center",
+      autoClose: 8000,
+      hideProgressBar: false,
+      closeOnClick: true,
+      pauseOnHover: true,
+      draggable: true,
+      progress: undefined,
+      theme: "colored ",
+      });;
+    if (CaloriasConsumidas >= objetivoCalorias) {
+      objetivoCumplido();
+    } else if (CaloriasRestantes > 0) {
+      objetivoNoCumplido();
+    }
     }, [ objetivoCalorias]);
   
 
