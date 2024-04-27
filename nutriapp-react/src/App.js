@@ -10,6 +10,7 @@ import Sidebar from './components/Sidebar';
 import Title from './components/Title';
 import BusquedaAlimento from './components/mains/BusquedaAlimento.js';
 import RegistroAlimentos from './components/mains/RegistroAlimentos.js';
+import RegistroHistorico from './components/mains/RegistroHistorico.js';
 import NuevoAlimento from './components/mains/NuevoAlimento';
 import CrearUsuario from './components/mains/CrearUsuario.js';
 import Comparativa from './components/mains/Comparativa.js';
@@ -56,7 +57,8 @@ export default function App() {
         <Route path="/" element={<Main usuario={usuario} fecha={fechaActual}/> } />
         <Route path="/registroalimentos/*" element={<RegistroAlimentos alimentos={alimentos} usuario={usuario} fecha={fechaActual}/>} />
         <Route path="/nuevoalimento" element={<NuevoAlimento agregarAlimento={agregarAlimento} usuario={usuario} fecha={fechaActual}/>} />
-        <Route path="/busqueda" element={<BusquedaAlimento agregarAlimento={agregarAlimento} usuario={usuario} fecha={fechaActual}/>} /> 
+        <Route path="/busqueda" element={<BusquedaAlimento agregarAlimento={agregarAlimento} usuario={usuario} fecha={fechaActual}/>} />
+        <Route path="/registrohistorico" element={<RegistroHistorico usuario={usuario}/>} />
         <Route path="/habitos" element={<Habitos usuario={usuario} fecha={fechaActual}/>} />
         <Route path="/ajustes" element={<Ajustes/>} />
         <Route path="/crearusuario" element={<CrearUsuario/>} />
