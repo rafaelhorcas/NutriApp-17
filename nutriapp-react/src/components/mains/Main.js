@@ -33,6 +33,7 @@ export default function Main(props){
 
   const [alimentos, setAlimentos] = useState([]);
   const [activo, setActivo] = useState(false);
+  const [objetivoCalorias, setObjetivoCalorias] = useState(2400); // Valor inicial
 
   //Peticiones API REST segun el ckeckbox
   useEffect(() => {
@@ -63,7 +64,6 @@ export default function Main(props){
   };
 
   //Funciones para sumar los valores nutricionales
-  const objetivoCalorias = 2400;
   const CaloriasConsumidas = alimentos.reduce((totalKcal, alimento) => {
     return totalKcal + alimento.alimento.calorias;
   }, 0);
@@ -113,14 +113,19 @@ export default function Main(props){
           <Pie data={data} options={options}/>
         </div>
         <div className="text">
-        <Form>
-          <Form.Check type="switch" id="interruptor" label="Diario/Semanal" checked={activo} onChange={handleClick}/>
-        </Form>
-          <p>Objetivo de calorías: {objetivoCalorias} kcal</p>
-          <p>Calorías consumidas: {CaloriasConsumidas} kcal</p>
-          <p>Proteínas: {sumaProteinasTotales} g</p>
-          <p>Carbohidratos: {sumaCarbohidratosTotales} g</p>
-          <p>Grasas: {sumaGrasasTotales} g</p>
+          <div className='form-column'>
+            <Form>
+              <Form.Check type="switch" id="interruptor" label="Diario/Semanal" checked={activo} onChange={handleClick}/>
+              <Form.Range  value={objetivoCalorias} onChange={(e) => setObjetivoCalorias(parseInt(e.target.value))} min={1000} max={5000} step={100} />
+              <p>Objetivo de calorías: {objetivoCalorias} kcal</p>
+            </Form>
+          </div>
+          <div className='metrics-column'>
+            <p>Calorías consumidas: {CaloriasConsumidas} kcal</p>
+            <p>Proteínas: {sumaProteinasTotales} g</p>
+            <p>Carbohidratos: {sumaCarbohidratosTotales} g</p>
+            <p>Grasas: {sumaGrasasTotales} g</p>
+          </div>
         </div>
       </div>
     </div>
