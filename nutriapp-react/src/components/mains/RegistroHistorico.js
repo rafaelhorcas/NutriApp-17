@@ -8,7 +8,7 @@ import Chart from 'chart.js/auto';
 export default function RegistroHistorico(props){
 
     const [alimentos, setAlimentos] = useState([]);
-        const [ingestas, setIngestas] = useState([]);
+    const [ingestas, setIngestas] = useState([]);
 
     //Peticion API REST
     useEffect(() => {
