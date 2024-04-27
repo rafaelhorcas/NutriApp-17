@@ -12,5 +12,6 @@ public interface RegistroAlimentoRepository extends CrudRepository<RegistroAlime
 
     List<RegistroAlimento> findByUsuarioAndFecha(Usuario usuario, String fecha);
     List<RegistroAlimento> findByUsuarioAndFechaBetween(Usuario usuario, String fecha, String fechaActual);
+    List<RegistroAlimento> findByUsuario(Usuario usuario);
     Optional <RegistroAlimento> findById(Long id);
 }
