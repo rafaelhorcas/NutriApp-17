@@ -2,6 +2,7 @@ import '../../App.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import { useEffect, useState } from 'react';
 import ReactApexChart from 'react-apexcharts'; //npm install react-apexcharts
+import { Table, Button } from 'react-bootstrap';
 
 export default function Habitos(props){
 
@@ -424,17 +425,30 @@ export default function Habitos(props){
             {error && <p>{error}</p>}
             <div>
               <h2>Alimentos del día {fechaSeleccionada}:</h2>
-              <ul>
-                {alimentosDiario.map((alimento, index) => (
-                  <li key={index}>
-                    <p>Nombre: {alimento.alimento.nombre}</p>
-                    <p>Calorías: {alimento.alimento.calorias}</p>
-                    <p>Proteínas: {alimento.alimento.proteinas}</p>
-                    <p>Grasas: {alimento.alimento.grasas}</p>
-                    <p>Carbohidratos: {alimento.alimento.carbohidratos}</p>
-                  </li>
-                ))}
-              </ul>
+                 <Table striped bordered hover>
+                <thead>
+                    <tr>
+                        <th>Alimento</th>
+                        <th>Cantidad</th>
+                        <th>Calorías</th>
+                        <th>Proteinas</th>
+                        <th>Carbohidratos</th>
+                        <th>Grasas</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {alimentosDiario.map((alimento, index) => (
+                        <tr key={index}>
+                            <td>{alimento.alimento.nombre}</td>
+                            <td>{alimento.cantidad}</td>  
+                            <td>{alimento.alimento.calorias}</td>
+                            <td>{alimento.alimento.proteinas}</td>
+                            <td>{alimento.alimento.carbohidratos}</td>
+                            <td>{alimento.alimento.grasas}</td>
+                        </tr>
+                    ))}
+                </tbody>
+            </Table>
             </div>
           </div>
             <div className="chat-option">
