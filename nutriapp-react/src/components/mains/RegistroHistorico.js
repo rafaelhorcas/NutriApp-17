@@ -3,6 +3,7 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 
 import React, { useState, useEffect } from 'react';
 import { Table, Button } from 'react-bootstrap';
+import Chart from 'chart.js/auto';
 
 export default function RegistroHistorico(props){
 
@@ -20,6 +21,7 @@ export default function RegistroHistorico(props){
             }
             const data = await response.json();
             setAlimentos(data);
+            generarGrafica(data);
           } catch (error) {
             console.error('Error al obtener alimentos:', error);
           }
@@ -27,6 +29,41 @@ export default function RegistroHistorico(props){
     
         obtenerAlimentos();
       }, [props.usuario.email]);
+
+     // Función para generar la gráfica de barras
+    const generarGrafica = (data) => {
+        const alimentosConsumidos = {};
+        data.forEach(registro => {
+            const nombreAlimento = registro.alimento.nombre;
+            if (alimentosConsumidos[nombreAlimento]) {
+                alimentosConsumidos[nombreAlimento] += registro.cantidad;
+            } else {
+                alimentosConsumidos[nombreAlimento] = registro.cantidad;
+            }
+        });
+
+        const ctx = document.getElementById('graficaAlimentos');
+        new Chart(ctx, {
+            type: 'bar',
+            data: {
+                labels: Object.keys(alimentosConsumidos),
+                datasets: [{
+                    label: 'Cantidad Consumida',
+                    data: Object.values(alimentosConsumidos),
+                    backgroundColor: 'rgba(54, 162, 235, 0.5)',
+                    borderColor: 'rgba(54, 162, 235, 1)',
+                    borderWidth: 1
+                }]
+            },
+            options: {
+                scales: {
+                    y: {
+                        beginAtZero: true
+                    }
+                }
+            }
+        });
+    };
 
       return(
         <div className='main'>
