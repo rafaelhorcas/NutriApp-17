@@ -8,6 +8,7 @@ import Chart from 'chart.js/auto';
 export default function RegistroHistorico(props){
 
     const [alimentos, setAlimentos] = useState([]);
+        const [ingestas, setIngestas] = useState([]);
 
     //Peticion API REST
     useEffect(() => {
@@ -63,6 +64,28 @@ export default function RegistroHistorico(props){
                 }
             }
         });
+    };
+
+    // Función para analizar las ingestas y detectar posibles carencias alimenticias
+    const analizarIngestas = () => {
+        const totalProteinas = alimentos.reduce((total, registro) => total + registro.alimento.proteinas * registro.cantidad, 0);
+        const totalCarbohidratos = alimentos.reduce((total, registro) => total + registro.alimento.carbohidratos * registro.cantidad, 0);
+        const totalGrasas = alimentos.reduce((total, registro) => total + registro.alimento.grasas * registro.cantidad, 0);
+
+        // Comparar con las recomendaciones diarias
+        const recomendacionProteinas = 50; // g/día
+        const recomendacionCarbohidratos = 200; // g/día
+        const recomendacionGrasas = 70; // g/día
+
+        }if (totalProteinas < recomendacionProteinas) {
+            alert('¡Cuidado! Podrías tener una deficiencia de proteínas.');
+        }
+        if (totalCarbohidratos < recomendacionCarbohidratos) {
+            alert('¡Cuidado! Podrías tener una deficiencia de carbohidratos.');
+        }
+        if (totalGrasas < recomendacionGrasas) {
+            alert('¡Cuidado! Podrías tener una deficiencia de grasas.');
+        }
     };
 
       return(
