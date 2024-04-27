@@ -60,10 +60,4 @@ export default function RegistroHistorico(props){
         </Table>
         </div>
       );
-
-
-
-
-
-
 }
