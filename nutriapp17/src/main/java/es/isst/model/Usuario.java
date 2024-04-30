@@ -7,11 +7,14 @@ import jakarta.persistence.Id;
 public class Usuario{
 
     @Id private String email;
+    private String password;
     private boolean espremium;
+    
 
 
-    public Usuario(String email, boolean espremium) {
+    public Usuario(String email, String password, boolean espremium) {
         this.email = email;
+        this.password = password;
         this.espremium = espremium;
     }
     public Usuario(){}
@@ -19,19 +22,21 @@ public class Usuario{
     public String getEmail() {
         return email;
     }
-
     public void setEmail(String email) {
         this.email = email;
+    }
+    public String getPassword() {
+        return password;
+    }
+    public void setPassword(String password) {
+        this.password = password;
     }
       public boolean getEspremium() {
         return espremium;
     }
-
     public void setEspremium(boolean espremium) {
         this.espremium = espremium;
     }
-
-
     // Método para imprimir la información del usuario
     @Override
     public String toString() {
@@ -40,5 +45,6 @@ public class Usuario{
                 ", espremium=" + espremium +
                 '}';
     }
+
 
 }  

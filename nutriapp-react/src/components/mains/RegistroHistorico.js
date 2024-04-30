@@ -77,7 +77,7 @@ export default function RegistroHistorico(props){
         const recomendacionCarbohidratos = 200; // g/día
         const recomendacionGrasas = 70; // g/día
 
-        }if (totalProteinas < recomendacionProteinas) {
+        if (totalProteinas < recomendacionProteinas) {
             alert('¡Cuidado! Podrías tener una deficiencia de proteínas.');
         }
         if (totalCarbohidratos < recomendacionCarbohidratos) {
