@@ -51,6 +51,8 @@ export default function NuevoAlimento(props) {
     };
 
     return (
+        <div>
+        {props.usuario.esPremium ? (    
         <div className='main'>
             <h2>Nuevo Alimento</h2>
             <Form onSubmit={(e) => { e.preventDefault(); handleSearch(); }}>
@@ -93,30 +95,37 @@ export default function NuevoAlimento(props) {
                 </div>
             )}
 
-            <div className="mt-4">
-                <h3>Resultados de la búsqueda:</h3>
-                <Row xs={1} md={2} lg={3} className="g-4">
-                    {searchResults.map(product => (
-                        <Col key={product.code}>
-                            <Card className="custom-card">
-                                <Card.Img variant="top" src={product.image_url} />
-                                <Card.Body>
-                                    <Card.Title>{product.product_name}</Card.Title>
-                                    <Card.Text>Categoría: {product.categories}</Card.Text>
-                                    <Card.Text>Marca: {product.brands}</Card.Text>
-                                    <Card.Text>Cantidad: {product.quantity}</Card.Text>
-                                    <Button
-                                        variant={selectedProducts.some(selectedProduct => selectedProduct.code === product.code) ? "danger" : "success"}
-                                        onClick={() => handleSelectProduct(product)}
-                                    >
-                                        {selectedProducts.some(selectedProduct => selectedProduct.code === product.code) ? "Quitar de Comparación" : "Comparar"}
-                                    </Button>
-                                </Card.Body>
-                            </Card>
-                        </Col>
-                    ))}
-                </Row>
-            </div>
+            {searchResults.length > 0 && (
+                <div className="mt-4">
+                    <h3>Resultados de la búsqueda:</h3>
+                    <Row xs={1} md={2} lg={3} className="g-4">
+                        {searchResults.map(product => (
+                            <Col key={product.code}>
+                                <Card className="custom-card">
+                                    <Card.Img variant="top" src={product.image_url} />
+                                    <Card.Body>
+                                        <Card.Title>{product.product_name}</Card.Title>
+                                        <Card.Text>Categoría: {product.categories}</Card.Text>
+                                        <Card.Text>Marca: {product.brands}</Card.Text>
+                                        <Card.Text>Cantidad: {product.quantity}</Card.Text>
+                                        <Button
+                                            variant={selectedProducts.some(selectedProduct => selectedProduct.code === product.code) ? "danger" : "success"}
+                                            onClick={() => handleSelectProduct(product)}
+                                        >
+                                            {selectedProducts.some(selectedProduct => selectedProduct.code === product.code) ? "Quitar de Comparación" : "Comparar"}
+                                        </Button>
+                                    </Card.Body>
+                                </Card>
+                            </Col>
+                        ))}
+                    </Row>
+                </div>
+            )}
+
+        </div>
+        ) : (
+            <p>No eres usuario de pago</p>
+          )}
         </div>
     );
 }
