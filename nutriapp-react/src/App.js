@@ -14,6 +14,7 @@ import RegistroHistorico from './components/mains/RegistroHistorico.js';
 import NuevoAlimento from './components/mains/NuevoAlimento';
 import CrearUsuario from './components/mains/CrearUsuario.js';
 import Comparativa from './components/mains/Comparativa.js';
+import Login from './components/mains/Login.js';
 import { mock_alimentos } from './constants/alimentos.js';
 
 import React, { useState, useEffect } from 'react';
@@ -25,12 +26,11 @@ import { Route, Routes, useNavigate } from 'react-router-dom';
 export default function App() {
   const [fechaActual, setFechaActual] = useState('');
   const [alimentos, setAlimentos] = useState([]);
-  
-  const [usuario, setUsuario] = useState({
-    email: 'admin@admin.es',
-    esPremium: true,
+  const [usuario, setUsuario] = useState(() => {
+    const storedUser = localStorage.getItem('usuario');
+    return storedUser ? JSON.parse(storedUser) : { email: 'admin@admin.es', esPremium: true };
   });
-  
+   
   let navigate = useNavigate();
 
   useEffect(() => {
@@ -42,6 +42,10 @@ export default function App() {
     setFechaActual(formattedDate);
     console.log(usuario)
   }, []);
+
+  useEffect(() => {
+    localStorage.setItem('usuario', JSON.stringify(usuario));
+  }, [usuario]);
 
   const agregarAlimento = (nuevoAlimento) => {
     setAlimentos([...alimentos, nuevoAlimento]);
@@ -65,6 +69,8 @@ export default function App() {
         <Route path="/comparativa" element={<Comparativa/>} />
       </Routes>
       <Footer/>
+       <Login setUsuario={setUsuario} />
+       <p>{usuario.email}</p>
     </Container>
   );
 }
