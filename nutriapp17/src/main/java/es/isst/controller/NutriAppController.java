@@ -8,6 +8,8 @@ import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.Map;
+import java.util.HashMap;
 import java.util.Optional;
 
 import org.slf4j.LoggerFactory;
@@ -25,6 +27,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import es.isst.model.Alimento;
+import es.isst.model.LoginRequest;
 import es.isst.model.RegistroAlimento;
 import es.isst.model.Usuario;
 import es.isst.repository.AlimentoRepository;
@@ -93,6 +96,26 @@ public class NutriAppController {
           return new ResponseEntity<>("El usuario no se encontró", HttpStatus.NOT_FOUND);
       }
   }
+
+  @PostMapping("/inicio")
+    public ResponseEntity<?> login(@RequestBody LoginRequest request) {
+        // Buscar el usuario por su correo electrónico en la base de datos
+        Usuario usuario = usuarioRepository.findByEmail(request.getEmail())
+                .orElseThrow(() -> new UsernameNotFoundException("Usuario no encontrado"));
+
+        // Verificar si la contraseña proporcionada coincide con la contraseña almacenada en la base de datos
+        if (!usuario.getPassword().equals(request.getPassword())) {
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Credenciales incorrectas");
+        }
+
+       // Crear un mapa con los datos del usuario
+        Map<String, Object> userData = new HashMap<>();
+        userData.put("email", usuario.getEmail());
+        userData.put("esPremium", usuario.getEspremium());
+
+        // Si las credenciales son correctas, devolver una respuesta exitosa junto con los datos del usuario
+        return ResponseEntity.ok(userData); 
+    }
 
   //FUNCIONES DE ALIMENTOS
   
