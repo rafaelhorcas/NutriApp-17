@@ -35,7 +35,7 @@ export default function NuevoUsuario(props) {
         headers: {
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify({ email: usuario.email, espremium: usuario.esPremium }),
+        body: JSON.stringify({ email: usuario.email, password: usuario.contraseña, espremium: usuario.esPremium }),
       });
 
       if (!response.ok) {
