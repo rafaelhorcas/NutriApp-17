@@ -66,7 +66,7 @@ export default function App() {
         <Route path="/habitos" element={<Habitos usuario={usuario} fecha={fechaActual}/>} />
         <Route path="/ajustes" element={<Ajustes/>} />
         <Route path="/crearusuario" element={<CrearUsuario/>} />
-        <Route path="/comparativa" element={<Comparativa/>} />
+        <Route path="/comparativa" element={<Comparativa usuario={usuario}/>} />
       </Routes>
       <Footer/>
        <Login setUsuario={setUsuario} />
