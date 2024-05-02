@@ -31,8 +31,8 @@ export default function Login(props) {
       const data = await response.json();
       console.log("Respuesta /inicio",data)
       props.setUsuario(data); // Aquí asumiendo que el backend devuelve los datos del usuario
-      navigate('/')
       props.setAutenticado(true)
+      navigate('/')
     } else {
       // Si hay un error en la respuesta, mostrar un mensaje de error
       setError('Usuario o contraseña incorrectos');
