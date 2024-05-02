@@ -1,12 +1,16 @@
 import '../../App.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
-import React, { useState } from 'react';
+import React, { useState, useContext } from 'react';
+import { Form, Button }from 'react-bootstrap';
+import { useNavigate } from 'react-router-dom';
+import { userContext } from '../../App';
 
-function Login({setUsuario}) {
+export default function Login(props) {
+  let navigate = useNavigate();
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [error, setError] = useState('');
-
+  const {user, setUser} = useContext(userContext)
   const handleSubmit = async (e) => {
     e.preventDefault();
 
@@ -16,14 +20,16 @@ function Login({setUsuario}) {
       headers: {
         'Content-Type': 'application/json',
       },
-      body: JSON.stringify({ email: email, password :password }),
+      body: JSON.stringify({ email: email, password: password }),
     });
-
+    console.log(response)
     if (response.ok) {
       // Si la respuesta es exitosa, actualizar la variable usuario en App.js
       const data = await response.json();
-      console.log(data)
-      setUsuario(data); // Aquí asumiendo que el backend devuelve los datos del usuario
+      console.log("Respuesta /inicio",data)
+      setUser(data); // Aquí asumiendo que el backend devuelve los datos del usuario
+      navigate('/')
+      props.setAutenticado(true)
     } else {
       // Si hay un error en la respuesta, mostrar un mensaje de error
       setError('Usuario o contraseña incorrectos');
@@ -32,7 +38,7 @@ function Login({setUsuario}) {
 
   return (
     <div>
-      <form onSubmit={handleSubmit}>
+      <Form onSubmit={handleSubmit}>
         <input
           type="email"
           placeholder="Correo electrónico"
@@ -45,12 +51,12 @@ function Login({setUsuario}) {
           value={password}
           onChange={(e) => setPassword(e.target.value)}
         />
-        <button type="submit">Iniciar sesión</button>
-      </form>
+        <Button type="submit" variant='success'>Iniciar sesión</Button>
+      </Form>
+      <Button type="submit" variant='success' href='/signup'>Registrarse</Button>
       {error && <p>{error}</p>}
     </div>
   );
 }
 
-export default Login;
 

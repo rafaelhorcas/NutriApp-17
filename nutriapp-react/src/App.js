@@ -17,22 +17,35 @@ import Comparativa from './components/mains/Comparativa.js';
 import Login from './components/mains/Login.js';
 import { mock_alimentos } from './constants/alimentos.js';
 
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect , createContext, useContext} from 'react';
 import { Container } from 'react-bootstrap';
 import { Route, Routes, useNavigate } from 'react-router-dom';
 
-
+export const userContext = React.createContext();
 
 export default function App() {
+  let navigate = useNavigate();
   const [fechaActual, setFechaActual] = useState('');
   const [alimentos, setAlimentos] = useState([]);
+
+  const [autenticado, setAutenticado] = useState(false);
+  const [user, setUser] = useState({
+    email: '',
+    esPremium: false,
+  });
+
   const [usuario, setUsuario] = useState(() => {
     const storedUser = localStorage.getItem('usuario');
     return storedUser ? JSON.parse(storedUser) : { email: 'admin@admin.es', esPremium: true };
   });
-   
-  let navigate = useNavigate();
 
+  useEffect(() => {
+    localStorage.setItem('usuario', JSON.stringify(usuario));
+  }, [usuario]);
+
+  
+
+  // Obtención de la fecha
   useEffect(() => {
     const today = new Date();
     const dd = String(today.getDate()).padStart(2, '0');
@@ -43,34 +56,32 @@ export default function App() {
     console.log(usuario)
   }, []);
 
-  useEffect(() => {
-    localStorage.setItem('usuario', JSON.stringify(usuario));
-  }, [usuario]);
-
+  //Función de agregar alimentos
   const agregarAlimento = (nuevoAlimento) => {
     setAlimentos([...alimentos, nuevoAlimento]);
     navigate('/registroalimentos');
   };
-
+  console.log(user.email, autenticado)
   return (
+    <userContext.Provider value = {{user, setUser}}>
     <Container fluid>
-      <Title/>
-      <Header/>
-      <Sidebar/>
-      <Routes>
-        <Route path="/" element={<Main usuario={usuario} fecha={fechaActual}/> } />
-        <Route path="/registroalimentos/*" element={<RegistroAlimentos alimentos={alimentos} usuario={usuario} fecha={fechaActual}/>} />
-        <Route path="/nuevoalimento" element={<NuevoAlimento agregarAlimento={agregarAlimento} usuario={usuario} fecha={fechaActual}/>} />
-        <Route path="/busqueda" element={<BusquedaAlimento agregarAlimento={agregarAlimento} usuario={usuario} fecha={fechaActual}/>} />
-        <Route path="/registrohistorico" element={<RegistroHistorico usuario={usuario}/>} />
-        <Route path="/habitos" element={<Habitos usuario={usuario} fecha={fechaActual}/>} />
-        <Route path="/ajustes" element={<Ajustes/>} />
-        <Route path="/crearusuario" element={<CrearUsuario/>} />
-        <Route path="/comparativa" element={<Comparativa usuario={usuario}/>} />
-      </Routes>
-      <Footer/>
-       <Login setUsuario={setUsuario} />
-       <p>{usuario.email}</p>
+      <Title />
+          <Header />
+          <Sidebar />
+          <Routes>
+            <Route path="/" element={<Main usuario={usuario} fecha={fechaActual} />} />
+            <Route path="/registroalimentos/*" element={<RegistroAlimentos alimentos={alimentos} usuario={usuario} fecha={fechaActual} />} />
+            <Route path="/nuevoalimento" element={<NuevoAlimento agregarAlimento={agregarAlimento} usuario={usuario} fecha={fechaActual} />} />
+            <Route path="/busqueda" element={<BusquedaAlimento agregarAlimento={agregarAlimento} usuario={usuario} fecha={fechaActual} />} />
+            <Route path="/registrohistorico" element={<RegistroHistorico usuario={usuario} />} />
+            <Route path="/habitos" element={<Habitos usuario={usuario} fecha={fechaActual} />} />
+            <Route path="/ajustes" element={<Ajustes />} />
+            <Route path="/comparativa" element={<Comparativa usuario={usuario} />} />
+            <Route path="/login" element={<Login setAutenticado={setAutenticado} />} />
+            <Route path="/signup" element={<CrearUsuario setAutenticado={setAutenticado} setUsuario={setUsuario}/>} />
+        </Routes>
+      <Footer />
     </Container>
+    </userContext.Provider>
   );
 }
