@@ -25,10 +25,22 @@ export default function App() {
   //Variables de estado
   const [fechaActual, setFechaActual] = useState('');
   const [alimentos, setAlimentos] = useState([]);
+  
+  /*
   const [autenticado, setAutenticado] = useState(false);
   const [usuario, setUsuario] = useState({
     email: '',
     esPremium: false,
+  });
+  */
+
+  const [autenticado, setAutenticado] = useState(() => {
+    const storedAuth = localStorage.getItem('autenticado');
+    return storedAuth ? JSON.parse(storedAuth) : false;
+  });
+  const [usuario, setUsuario] = useState(() => {
+    const storedUser = localStorage.getItem('usuario');
+    return storedUser ? JSON.parse(storedUser) : { email: '', esPremium: false };
   });
 
   //Funciones
@@ -44,16 +56,26 @@ export default function App() {
     setFechaActual(formattedDate);
   }, []);
 
+  useEffect(() => {
+    localStorage.setItem('usuario', JSON.stringify(usuario));
+  }, [usuario]);
+
+  useEffect(() => {
+    localStorage.setItem('autenticado', JSON.stringify(autenticado));
+  }, [autenticado]);
+
   //Función de agregar alimentos
   const agregarAlimento = (nuevoAlimento) => {
     setAlimentos([...alimentos, nuevoAlimento]);
     navigate('/registroalimentos');
   };
   return (
+    <div>
+    {autenticado ? ( 
     <Container fluid>
       <Title/>
           <Header />
-          <Sidebar/>
+          <div>{!usuario.esPremium && <Sidebar />}</div>
           <Routes>
             <Route path="/" element={<Main fecha={fechaActual} usuario={usuario} />} />
             <Route path="/registroalimentos/*" element={<RegistroAlimentos alimentos={alimentos} fecha={fechaActual} usuario={usuario} />} />
@@ -64,9 +86,19 @@ export default function App() {
             <Route path="/comparativa" element={<Comparativa usuario={usuario}/>} />
             <Route path="/ajustes" element={<Ajustes usuario={usuario}/>} />
             <Route path="/login" element={<Login setAutenticado={setAutenticado} setUsuario={setUsuario} />} />
-            <Route path="/signup" element={<CrearUsuario setAutenticado={setAutenticado} setUsuario={setUsuario} />} />
+            <Route path="/logout" element={<Logout setAutenticado={setAutenticado} setUsuario={setUsuario} />} />
+            <Route path="/signup" element={<CrearUsuario />} />
         </Routes>
       <Footer />
     </Container>
+    ) : (
+      <div>
+          <Routes>
+            <Route path="/signup" element={<CrearUsuario />} />
+          </Routes>
+        <Login setAutenticado={setAutenticado} setUsuario={setUsuario} />
+      </div>
+    )}
+    </div>
   );
 }
