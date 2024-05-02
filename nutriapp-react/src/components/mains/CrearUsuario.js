@@ -1,11 +1,11 @@
-import '../../App.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
+import '../../App.css';
 
 import React, { useState } from 'react';
-import { Form, Row, Col, Button } from 'react-bootstrap';
+import { Button, Col, Form, Row } from 'react-bootstrap';
 import { useNavigate } from 'react-router-dom';
-export default function NuevoUsuario(props) {
-  let navigate = useNavigate();
+export default function NuevoUsuario() {
+  //Variables de estado
   const [usuario, setUsuario] = useState({
     nombre: '',
     email: '',
@@ -14,6 +14,8 @@ export default function NuevoUsuario(props) {
     esPremium: false,
   });
 
+  //Funciones
+  let navigate = useNavigate();
   const handleInputChange = (e) => {
     const { name, value } = e.target;
     setUsuario({ ...usuario, [name]: value });

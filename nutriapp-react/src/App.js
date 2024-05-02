@@ -1,50 +1,39 @@
-import './App.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
+import './App.css';
 
-import Header from './components/Header';
 import Footer from './components/Footer';
-import Main from './components/mains/Main';
-import Habitos from './components/mains/Habitos.js';
-import Ajustes from './components/mains/Ajustes.js';
+import Header from './components/Header';
 import Sidebar from './components/Sidebar';
 import Title from './components/Title';
+import Ajustes from './components/mains/Ajustes.js';
 import BusquedaAlimento from './components/mains/BusquedaAlimento.js';
+import Comparativa from './components/mains/Comparativa.js';
+import CrearUsuario from './components/mains/CrearUsuario.js';
+import Habitos from './components/mains/Habitos.js';
+import Login from './components/mains/Login.js';
+import Main from './components/mains/Main';
+import NuevoAlimento from './components/mains/NuevoAlimento';
 import RegistroAlimentos from './components/mains/RegistroAlimentos.js';
 import RegistroHistorico from './components/mains/RegistroHistorico.js';
-import NuevoAlimento from './components/mains/NuevoAlimento';
-import CrearUsuario from './components/mains/CrearUsuario.js';
-import Comparativa from './components/mains/Comparativa.js';
-import Login from './components/mains/Login.js';
-import { mock_alimentos } from './constants/alimentos.js';
 
-import React, { useState, useEffect , createContext, useContext} from 'react';
+import React, { useEffect, useState } from 'react';
 import { Container } from 'react-bootstrap';
 import { Route, Routes, useNavigate } from 'react-router-dom';
 
-export const userContext = React.createContext();
 
 export default function App() {
-  let navigate = useNavigate();
+  //Variables de estado
   const [fechaActual, setFechaActual] = useState('');
   const [alimentos, setAlimentos] = useState([]);
-
   const [autenticado, setAutenticado] = useState(false);
-  const [user, setUser] = useState({
+  const [usuario, setUsuario] = useState({
     email: '',
     esPremium: false,
   });
 
-  const [usuario, setUsuario] = useState(() => {
-    const storedUser = localStorage.getItem('usuario');
-    return storedUser ? JSON.parse(storedUser) : { email: 'admin@admin.es', esPremium: true };
-  });
-
-  useEffect(() => {
-    localStorage.setItem('usuario', JSON.stringify(usuario));
-  }, [usuario]);
-
+  //Funciones
+  let navigate = useNavigate();
   
-
   // Obtención de la fecha
   useEffect(() => {
     const today = new Date();
@@ -53,7 +42,6 @@ export default function App() {
     const yyyy = today.getFullYear();
     const formattedDate = `${dd}-${mm}-${yyyy}`; // Formato DD-MM-YYYY
     setFechaActual(formattedDate);
-    console.log(usuario)
   }, []);
 
   //Función de agregar alimentos
@@ -61,27 +49,24 @@ export default function App() {
     setAlimentos([...alimentos, nuevoAlimento]);
     navigate('/registroalimentos');
   };
-  console.log(user.email, autenticado)
   return (
-    <userContext.Provider value = {{user, setUser}}>
     <Container fluid>
-      <Title />
+      <Title/>
           <Header />
-          <Sidebar />
+          <Sidebar/>
           <Routes>
-            <Route path="/" element={<Main usuario={usuario} fecha={fechaActual} />} />
-            <Route path="/registroalimentos/*" element={<RegistroAlimentos alimentos={alimentos} usuario={usuario} fecha={fechaActual} />} />
-            <Route path="/nuevoalimento" element={<NuevoAlimento agregarAlimento={agregarAlimento} usuario={usuario} fecha={fechaActual} />} />
-            <Route path="/busqueda" element={<BusquedaAlimento agregarAlimento={agregarAlimento} usuario={usuario} fecha={fechaActual} />} />
-            <Route path="/registrohistorico" element={<RegistroHistorico usuario={usuario} />} />
-            <Route path="/habitos" element={<Habitos usuario={usuario} fecha={fechaActual} />} />
-            <Route path="/ajustes" element={<Ajustes />} />
-            <Route path="/comparativa" element={<Comparativa usuario={usuario} />} />
-            <Route path="/login" element={<Login setAutenticado={setAutenticado} />} />
-            <Route path="/signup" element={<CrearUsuario setAutenticado={setAutenticado} setUsuario={setUsuario}/>} />
+            <Route path="/" element={<Main fecha={fechaActual} usuario={usuario} />} />
+            <Route path="/registroalimentos/*" element={<RegistroAlimentos alimentos={alimentos} fecha={fechaActual} usuario={usuario} />} />
+            <Route path="/nuevoalimento" element={<NuevoAlimento agregarAlimento={agregarAlimento} fecha={fechaActual} usuario={usuario} />} />
+            <Route path="/busqueda" element={<BusquedaAlimento agregarAlimento={agregarAlimento} fecha={fechaActual} usuario={usuario} />} />
+            <Route path="/registrohistorico" element={<RegistroHistorico usuario={usuario}/>} />
+            <Route path="/habitos" element={<Habitos fecha={fechaActual} usuario={usuario}/>} />
+            <Route path="/comparativa" element={<Comparativa usuario={usuario}/>} />
+            <Route path="/ajustes" element={<Ajustes usuario={usuario}/>} />
+            <Route path="/login" element={<Login setAutenticado={setAutenticado} setUsuario={setUsuario} />} />
+            <Route path="/signup" element={<CrearUsuario setAutenticado={setAutenticado} setUsuario={setUsuario} />} />
         </Routes>
       <Footer />
     </Container>
-    </userContext.Provider>
   );
 }

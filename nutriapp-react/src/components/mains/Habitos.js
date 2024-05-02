@@ -1,11 +1,13 @@
-import '../../App.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
+import '../../App.css';
+
 import { useEffect, useState } from 'react';
-import ReactApexChart from 'react-apexcharts'; //npm install react-apexcharts
-import { Table, Button } from 'react-bootstrap';
+import ReactApexChart from 'react-apexcharts'; 
+import { Table } from 'react-bootstrap';
+
 
 export default function Habitos(props){
-
+    //Variables de estado
     const [alimentos, setAlimentos] = useState([]);
     const [fechaSeleccionada, setFechaSeleccionada] = useState('');
     const [alimentosDiario, setAlimentosDiario] = useState([]);
@@ -54,10 +56,10 @@ export default function Habitos(props){
       }, [props.usuario.email, fechaSeleccionada]);
 
       console.log(alimentosDiario)
-    
-      const handleFechaChange = (event) => {
-        setFechaSeleccionada(event.target.value);
-      };
+    //Funciones
+    const handleFechaChange = (event) => {
+      setFechaSeleccionada(event.target.value);
+    };
       
 
     // Calcular la suma de calorías de cada día
@@ -405,7 +407,9 @@ export default function Habitos(props){
     };
 
     return (
+      
       <div>
+        {console.log("userPremium",props.usuario.esPremium)}
         {props.usuario.esPremium ? (
           <div className="text">
             <div>
@@ -457,7 +461,7 @@ export default function Habitos(props){
             {showChat && <ChatWidget />}
           </div>
         ) : (
-          <p>No eres usuario de pago</p>
+          <p>No props.usuario.de pago</p>
         )}
       </div>
     );

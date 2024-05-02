@@ -1,12 +1,12 @@
 import '../../App.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
 
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect} from 'react';
 import { Table, Button } from 'react-bootstrap';
 import Chart from 'chart.js/auto';
 
 export default function RegistroHistorico(props){
-
+    //Variables de estado
     const [alimentos, setAlimentos] = useState([]);
     const [ingestas, setIngestas] = useState([]);
 

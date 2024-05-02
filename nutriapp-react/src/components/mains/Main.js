@@ -1,11 +1,12 @@
-import '../../App.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import 'react-toastify/dist/ReactToastify.css';
+import '../../App.css';
+
+import { ArcElement, Chart as ChartJS, Legend, Tooltip } from 'chart.js';
 import { useEffect, useState } from 'react';
-import { Form, Button } from 'react-bootstrap';
-import { Chart as ChartJS, ArcElement, Tooltip, Legend } from 'chart.js';
-import { ToastContainer, toast } from 'react-toastify';
+import { Button, Form } from 'react-bootstrap';
 import { Pie } from 'react-chartjs-2';
+import { ToastContainer, toast } from 'react-toastify';
 
 ChartJS.register(ArcElement, Tooltip, Legend);
 
@@ -31,7 +32,7 @@ const options = {
 }
 
 export default function Main(props){
-
+  //Variables de estado
   const [alimentos, setAlimentos] = useState([]);
   const [activo, setActivo] = useState(false);
   const [objetivoCalorias, setObjetivoCalorias] = useState();

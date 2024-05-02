@@ -1,18 +1,16 @@
-import '../../App.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
-
+import '../../App.css';
 
 import React, { useState } from 'react';
-import { Form, Row, Col, Button, Card, DropdownButton, Dropdown } from 'react-bootstrap';
-import { useNavigate } from 'react-router-dom';
+import { Button, Card, Col, Dropdown, DropdownButton, Form, Row } from 'react-bootstrap';
 
-export default function NuevoAlimento(props) {
+export default function Comparativa(props) {
+    //Variables de estado
     const [nombre, setNombre] = useState('');
     const [searchResults, setSearchResults] = useState([]);
     const [selectedProducts, setSelectedProducts] = useState([]);
-
-    const navigate = useNavigate();
-
+    
+    //Funciones
     const handleSelectProduct = (product) => {
         const isSelected = selectedProducts.some(selectedProduct => selectedProduct.code === product.code);
         isSelected
@@ -52,6 +50,7 @@ export default function NuevoAlimento(props) {
 
     return (
         <div>
+            {console.log("Comparativa_premium:",props.usuario.esPremium)}
         {props.usuario.esPremium ? (    
         <div className='main'>
             <h2>Nuevo Alimento</h2>

@@ -1,16 +1,16 @@
-
-import '../../App.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
+import '../../App.css';
 
 import React, { useState } from 'react';
-import { Form, Row, Col, Button, Card } from 'react-bootstrap';
+import { Button, Card, Col, Form, Row } from 'react-bootstrap';
 import { useNavigate } from 'react-router-dom';
 
-
-export default function NuevoAlimento(props) {
+export default function BusquedaAlimento(props) {
+    // Variables de estado
     const [nombre, setNombre] = useState('');
     const [searchResults, setSearchResults] = useState([]);
-
+    
+    // Funciones
     const navigate = useNavigate();
 
     const handleSelectProduct = (product) => {
@@ -29,8 +29,6 @@ export default function NuevoAlimento(props) {
         console.error('Error:', error);
       }
     };
-
-    
   
     return (
       <div className='main'>
@@ -44,7 +42,7 @@ export default function NuevoAlimento(props) {
           </Form.Group>
           <Button variant="primary" type="submit">Buscar</Button>
         </Form>
-  
+
         {searchResults.length > 0 && (
           <div className="mt-4">
             <h3>Resultados de la búsqueda:</h3>

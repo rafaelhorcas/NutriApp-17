@@ -1,15 +1,16 @@
-import '../../App.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
+import '../../App.css';
 
-import React, { useState, useEffect } from 'react';
-import { Table, Button } from 'react-bootstrap';
-import {useNavigate} from 'react-router-dom';
+import React, { useState } from 'react';
+import { Button, Form } from 'react-bootstrap';
+import { useNavigate } from 'react-router-dom';
 
 export default function EditarAlimento(props){
-
+    //Variables de estado
     const [nuevaCantidad, setNuevaCantidad] = useState(props.cantidad);
-    let navigate = useNavigate();
 
+    //Funciones
+    let navigate = useNavigate();
     const handleCantidadChange = (event) => {
         setNuevaCantidad(event.target.value);
     };
@@ -38,14 +39,13 @@ export default function EditarAlimento(props){
     };
 
     return (
-        <form onSubmit={handleSubmit}>
-            <label>
+        <Form onSubmit={handleSubmit}>
+            <Form.Label>
                 Editar cantidad:
                 <input type="number" value={nuevaCantidad} onChange={handleCantidadChange} />
-            </label>
-            <button type="submit">Guardar</button>
-           
-        </form>
+            </Form.Label>
+            <Button type="submit">Guardar</Button>
+        </Form>
     );
     
 } 

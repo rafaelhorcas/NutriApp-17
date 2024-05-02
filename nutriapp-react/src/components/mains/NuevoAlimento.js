@@ -1,15 +1,12 @@
-import '../../App.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
+import '../../App.css';
 
-import React, { useState, useEffect } from 'react';
-import { Form, Row, Col, Button } from 'react-bootstrap';
+import React, { useEffect, useState } from 'react';
+import { Button, Col, Form, Row } from 'react-bootstrap';
 import { useLocation, useNavigate } from 'react-router-dom';
 
 export default function NuevoAlimento(props) {
-
-  const location = useLocation();
-  const product = location.state?.product;
-  let navigate = useNavigate();
+  //Variables de estado
   const [alimento, setAlimento] = useState({
     nombre: '',
     cantidad: '',
@@ -18,6 +15,11 @@ export default function NuevoAlimento(props) {
     carbohidratos: '',
     grasas: ''
   });
+  const product = location.state?.product;
+
+  //Funciones
+  let navigate = useNavigate();
+  const location = useLocation();
 
   useEffect(() => {
     if (product) {

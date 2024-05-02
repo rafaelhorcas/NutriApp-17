@@ -1,16 +1,19 @@
-import '../../App.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
-import React, { useState, useContext } from 'react';
-import { Form, Button }from 'react-bootstrap';
+import '../../App.css';
+
+import React, { useContext, useState } from 'react';
+import { Button, Form } from 'react-bootstrap';
 import { useNavigate } from 'react-router-dom';
 import { userContext } from '../../App';
 
 export default function Login(props) {
-  let navigate = useNavigate();
+  //Variables de estado
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [error, setError] = useState('');
-  const {user, setUser} = useContext(userContext)
+
+  //Funciones
+  let navigate = useNavigate();
   const handleSubmit = async (e) => {
     e.preventDefault();
 
@@ -27,7 +30,7 @@ export default function Login(props) {
       // Si la respuesta es exitosa, actualizar la variable usuario en App.js
       const data = await response.json();
       console.log("Respuesta /inicio",data)
-      setUser(data); // Aquí asumiendo que el backend devuelve los datos del usuario
+      props.setUsuario(data); // Aquí asumiendo que el backend devuelve los datos del usuario
       navigate('/')
       props.setAutenticado(true)
     } else {
