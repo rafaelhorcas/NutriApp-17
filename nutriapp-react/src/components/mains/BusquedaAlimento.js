@@ -32,8 +32,10 @@ export default function BusquedaAlimento(props) {
   
     return (
       <div className='main'>
-        <h2>Nuevo Alimento</h2>
-        <Form onSubmit={(e) => { e.preventDefault(); handleSearch(); }}>
+        <div className='seccion-header'>
+          <h1>Nuevo Alimento</h1>
+        </div>
+        <Form style={{ padding: '5px' }}onSubmit={(e) => { e.preventDefault(); handleSearch(); }}>
           <Form.Group as={Row} className="mb-3" controlId="formNombre">
             <Form.Label column sm={2}>Nombre</Form.Label>
             <Col sm={10}>

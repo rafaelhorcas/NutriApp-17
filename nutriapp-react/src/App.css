@@ -17,6 +17,7 @@
   align-items: center;
   justify-content: center;
   color: white;
+  padding: 5px;
   grid-area: 1 / 1 / 2 / 3;
 }
 
@@ -64,13 +65,15 @@
   align-items: center;
   padding: 10px;
 }
+/*Clase de los titulos de cada seccion */
+.seccion-header{
+  background-color: #1B82CA;
+  border: 1px solid black; 
+  padding: 10px;
+  font-size: 32px;
+}
 
 /*CSS DE Main.js*/
-#chart-header{
-  background-color: bisque;
-  border: 1px solid black; 
-  padding: 20px;
-}
 .chart-content{
   display: flex;
   justify-content: center;
@@ -99,6 +102,13 @@
   border: 2px solid black; 
   box-shadow: 0px 0px 5px rgba(0,0,0,0.3); 
   border-radius: 6px;
+}
+/*CSS DE RegistroAlimentos.js*/
+.botones{
+  padding: 10px;
+}
+.botones a {
+  margin-right: 10px; /* Añade un margen de 10px a la derecha de cada enlace */
 }
 
 .card-img-top {

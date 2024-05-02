@@ -32,7 +32,9 @@ export default function RegistroAlimentos(props) {
     return (
         <div className='main'>
            {console.log(props.usuario.email)}
-            <h1>Registro de Comidas del día {props.fecha}</h1>
+            <div className='seccion-header'>
+                <h1 >Registro de Comidas del día {props.fecha}</h1>
+            </div>
             <div className='botones'>
                 <Button variant="success" href="/busqueda">Búsqueda de alimentos</Button> 
                 <Button variant="success" href="/nuevoalimento">Añadir nuevo alimento</Button>

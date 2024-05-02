@@ -90,7 +90,9 @@ export default function RegistroHistorico(props){
 
       return(
         <div className='main'>
-            <h1>Registro de Comidas</h1>
+            <div className='seccion-header'>
+                <h1>Registro de Comidas</h1>
+            </div>
             <div className='botones'>
             <Button variant="success" href="/registroalimentos">Volver</Button>  
         </div>

@@ -156,8 +156,8 @@ export default function Main(props){
   return (
     <div className='main'>
       <ToastContainer position="top-right" autoClose={5000} hideProgressBar={false} newestOnTop={false} closeOnClick rtl={false} pauseOnFocusLoss draggable pauseOnHover theme="colored" />
-      <div id='chart-header'>
-        <h3>Resumen {activo ? ` semanal del ${formatDate(fechaMenosSieteDate)} al ${formatDate(fechaActualDate)}` : ` diario del ${props.fecha}`}</h3>
+      <div className='seccion-header'>
+        <h1>Resumen {activo ? ` semanal del ${formatDate(fechaMenosSieteDate)} al ${formatDate(fechaActualDate)}` : ` diario del ${props.fecha}`}</h1>
       </div>
       <div className='chart-content'>
         <div className="chart">
