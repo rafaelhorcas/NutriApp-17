@@ -6,8 +6,7 @@
   display: grid;
   text-align: center;
   grid-template-columns: 80% 20%;
-  grid-template-rows: auto 60px auto auto;
-  height: 80vh; 
+  grid-template-rows: auto 60px auto auto; 
 
 }
 .title{
@@ -73,7 +72,7 @@
   font-size: 32px;
 }
 
-/*CSS DE Main.js*/
+/*CSS de Main.js*/
 .chart-content{
   display: flex;
   justify-content: center;
@@ -103,7 +102,8 @@
   box-shadow: 0px 0px 5px rgba(0,0,0,0.3); 
   border-radius: 6px;
 }
-/*CSS DE RegistroAlimentos.js*/
+
+/*CSS de RegistroAlimentos.js*/
 .botones{
   padding: 10px;
 }
@@ -111,13 +111,14 @@
   margin-right: 10px; /* Añade un margen de 10px a la derecha de cada enlace */
 }
 
+/*CSS de las Cards*/
 .card-img-top {
-  height: 500px; 
-  object-fit: cover; 
+  height: 200px; 
+  object-fit: scale-down; 
 }
 
 .card {
-  height: 500px; /* Ajusta esta altura según tus preferencias */
+  height: auto; /* Ajusta esta altura según tus preferencias */
 }
 
 .custom-card {
@@ -174,8 +175,8 @@ h2 {
 }
 
 #dropdown-basic-button {
-background-color: #007bff;
-border-color: #007bff;
+background-color: #28a745;
+border-color: #28a745;
 border-radius: 20px;
 }
 

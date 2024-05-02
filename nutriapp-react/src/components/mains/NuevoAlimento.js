@@ -15,11 +15,11 @@ export default function NuevoAlimento(props) {
     carbohidratos: '',
     grasas: ''
   });
-  const product = location.state?.product;
 
   //Funciones
   let navigate = useNavigate();
   const location = useLocation();
+  const product = location.state?.product;
 
   useEffect(() => {
     if (product) {
@@ -90,8 +90,10 @@ export default function NuevoAlimento(props) {
 
   return (
     <div className='main'>
-      <h2>Nuevo Alimento</h2>
-      <Form onSubmit={handleSubmit}>
+      <div className='seccion-header'>
+        <h1>Nuevo Alimento</h1>
+      </div>
+      <Form style={{ padding: '5px' }} onSubmit={handleSubmit}>
         <Form.Group as={Row} className="mb-3" controlId="formNombre">
           <Form.Label column sm={2}>Nombre</Form.Label>
           <Col sm={10}>

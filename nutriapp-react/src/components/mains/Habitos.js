@@ -411,7 +411,11 @@ export default function Habitos(props){
       <div>
         {console.log("userPremium",props.usuario.esPremium)}
         {props.usuario.esPremium ? (
+          
           <div className="text">
+            <div className='seccion-header'>
+              <h1>Hábitos alimenticios</h1>
+            </div>
             <div>
               <ReactApexChart options={optionscalorias} series={seriescalorias} type="line" height={350} />
               <ReactApexChart options={optionsproteinas} series={seriesproteinas} type="line" height={350} />

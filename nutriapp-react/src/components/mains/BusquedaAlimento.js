@@ -35,14 +35,14 @@ export default function BusquedaAlimento(props) {
         <div className='seccion-header'>
           <h1>Nuevo Alimento</h1>
         </div>
-        <Form style={{ padding: '5px' }}onSubmit={(e) => { e.preventDefault(); handleSearch(); }}>
+        <Form style={{ padding: '5px' }} onSubmit={(e) => { e.preventDefault(); handleSearch(); }}>
           <Form.Group as={Row} className="mb-3" controlId="formNombre">
             <Form.Label column sm={2}>Nombre</Form.Label>
             <Col sm={10}>
               <Form.Control type="text" placeholder="Nombre del alimento" value={nombre} onChange={(e) => setNombre(e.target.value)} />
             </Col>
           </Form.Group>
-          <Button variant="primary" type="submit">Buscar</Button>
+          <Button variant="success" type="submit">Buscar</Button>
         </Form>
 
         {searchResults.length > 0 && (

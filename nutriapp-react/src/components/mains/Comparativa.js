@@ -53,15 +53,17 @@ export default function Comparativa(props) {
             {console.log("Comparativa_premium:",props.usuario.esPremium)}
         {props.usuario.esPremium ? (    
         <div className='main'>
-            <h2>Nuevo Alimento</h2>
-            <Form onSubmit={(e) => { e.preventDefault(); handleSearch(); }}>
+            <div className='seccion-header'>
+                <h1>Comparativa de alimentos</h1>
+            </div>
+            <Form style={{ padding: '5px' }} onSubmit={(e) => { e.preventDefault(); handleSearch(); }}>
                 <Form.Group as={Row} className="mb-3" controlId="formNombre">
                     <Form.Label column sm={2}>Nombre</Form.Label>
                     <Col sm={8}>
                         <Form.Control type="text" placeholder="Nombre del alimento" value={nombre} onChange={(e) => setNombre(e.target.value)} />
                     </Col>
                     <Col sm={2}>
-                        <Button variant="primary" type="submit">Buscar</Button>
+                        <Button variant="success" type="submit">Buscar</Button>
                     </Col>
                 </Form.Group>
             </Form>
