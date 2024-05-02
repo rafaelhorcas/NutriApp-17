@@ -465,7 +465,7 @@ export default function Habitos(props){
             {showChat && <ChatWidget />}
           </div>
         ) : (
-          <p>No props.usuario.de pago</p>
+          <p>No eres usuario de pago</p>
         )}
       </div>
     );
