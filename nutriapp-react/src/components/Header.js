@@ -29,6 +29,7 @@ export default function Header () {
             <NavLink style={navLinkStyle} to="/habitos">Hábitos Alimenticios</NavLink>
             <NavLink style={navLinkStyle} to="/comparativa">Comparativa</NavLink>
             <NavLink style={navLinkStyle} to="/ajustes">Ajustes</NavLink>
+            <NavLink style={navLinkStyle} to="/logout">Logout</NavLink>
           </Nav>
         </Container>
       </Navbar>
