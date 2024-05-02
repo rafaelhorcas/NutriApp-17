@@ -11,6 +11,7 @@ import Comparativa from './components/mains/Comparativa.js';
 import CrearUsuario from './components/mains/CrearUsuario.js';
 import Habitos from './components/mains/Habitos.js';
 import Login from './components/mains/Login.js';
+import Logout from './components/mains/Logout.js';
 import Main from './components/mains/Main';
 import NuevoAlimento from './components/mains/NuevoAlimento';
 import RegistroAlimentos from './components/mains/RegistroAlimentos.js';
