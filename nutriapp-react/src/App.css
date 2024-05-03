@@ -34,7 +34,7 @@
 
 .nav-link {
   color: black !important;
-  background-color: #1bca63 !important;
+  background-color: #14984A !important;
   border-radius: 5px;
   margin: 0 10px; 
 }
@@ -160,13 +160,13 @@
 }
 
 .btn-success {
-  background-color: #28a745;
-  border-color: #28a745;
+  background-color: #14984A;
+  border-color: #14984A;
 }
 
 .btn-success:hover {
-  background-color: #218838;
-  border-color: #1e7e34;
+  background-color: #117E3E;
+  border-color: #117E3E;
 }
 
 h2 {
