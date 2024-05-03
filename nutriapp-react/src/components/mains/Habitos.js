@@ -408,11 +408,11 @@ export default function Habitos(props){
 
     return (
       
-      <div>
+      <div className="main">
         {console.log("userPremium",props.usuario.esPremium)}
         {props.usuario.esPremium ? (
           
-          <div className="text">
+          <div>
             <div className='seccion-header'>
               <h1>Hábitos alimenticios</h1>
             </div>
