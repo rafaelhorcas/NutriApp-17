@@ -136,7 +136,7 @@ export default function Main(props){
     labels: ['Ingeridas', 'Restantes'],
     datasets: [{
       data: CaloriasConsumidas > objetivoGrafico ? [objetivoGrafico, 0] : [CaloriasConsumidas, objetivoGrafico - CaloriasConsumidas],
-      backgroundColor: ['#1bca63', '#757A76'],
+      backgroundColor: ['#14984A', '#757A76'],
     }],
   };
 

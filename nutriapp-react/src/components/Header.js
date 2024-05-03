@@ -11,7 +11,7 @@ const navLinkStyle = {
   marginRight: '1rem', // Margen derecho entre enlaces
   borderRadius: '0.25rem', // Bordes redondeados
   transition: 'background-color 0.3s', // Transición suave al cambiar el color de fondo
-  backgroundColor: '#1bca63'
+  backgroundColor: '#18B157'
 };
 
 const navBrandStyle = {
