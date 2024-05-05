@@ -17,25 +17,30 @@ export default function Login(props) {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    // Realizar la solicitud de inicio de sesión al backend
-    const response = await fetch('http://localhost:8080/inicio', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({ email: email, password: password }),
-    });
-    console.log(response)
-    if (response.ok) {
-      // Si la respuesta es exitosa, actualizar la variable usuario en App.js
-      const data = await response.json();
-      console.log("Respuesta /inicio",data)
-      props.setUsuario(data); // Aquí asumiendo que el backend devuelve los datos del usuario
-      props.setAutenticado(true)
-      navigate('/')
-    } else {
-      // Si hay un error en la respuesta, mostrar un mensaje de error
-      setError('Usuario o contraseña incorrectos');
+    try {
+      // Realizar la solicitud de inicio de sesión al backend
+      const response = await fetch('http://localhost:8080/inicio', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ email: email, password: password }),
+      });
+  
+      if (response.ok) {
+        // Si la respuesta es exitosa, actualizar la variable usuario en App.js
+        const data = await response.json();
+        props.setUsuario(data); // Aquí asumiendo que el backend devuelve los datos del usuario
+        props.setAutenticado(true)
+        navigate('/')
+      } else {
+        // Si hay un error en la respuesta, mostrar un mensaje de error
+        setError('Usuario o contraseña incorrectos');
+      }
+    } catch (error) {
+      // Manejar el error aquí, por ejemplo, mostrar un mensaje de error al usuario
+      setError('Usuario o contraseña incorrectos.');
+      console.error('Error al realizar la solicitud:', error);
     }
   };
 
