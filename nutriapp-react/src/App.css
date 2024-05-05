@@ -283,3 +283,14 @@ object-fit: cover;
   font-size: 1.2em; 
   padding: 10px 20px;
 }
+.text-privacidad {
+  font-size: 12px;
+  text-align: justify;
+  padding: 10px;
+  border: 0.5px solid black;
+  background-color: #A2E5F6;
+}
+
+.text-privacidad p {
+  margin-bottom: 5px;
+}
