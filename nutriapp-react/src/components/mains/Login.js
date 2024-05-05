@@ -1,10 +1,9 @@
 import 'bootstrap/dist/css/bootstrap.min.css';
 import '../../App.css';
-
-import React, { useContext, useState } from 'react';
+import Title from '../Title';
+import React, { useState } from 'react';
 import { Button, Form } from 'react-bootstrap';
 import { useNavigate } from 'react-router-dom';
-import { userContext } from '../../App';
 
 export default function Login(props) {
   //Variables de estado
@@ -46,23 +45,35 @@ export default function Login(props) {
 
   return (
     <div>
-      <Form onSubmit={handleSubmit}>
-        <input
-          type="email"
-          placeholder="Correo electrónico"
-          value={email}
-          onChange={(e) => setEmail(e.target.value)}
-        />
-        <input
-          type="password"
-          placeholder="Contraseña"
-          value={password}
-          onChange={(e) => setPassword(e.target.value)}
-        />
-        <Button type="submit" variant='success'>Iniciar sesión</Button>
-      </Form>
-      <Button type="submit" variant='success' href='/signup'>Registrarse</Button>
-      {error && <p>{error}</p>}
+      <Title/>
+      <div className='login'>
+      <h1>Iniciar Sesión</h1>
+        <Form onSubmit={handleSubmit}>
+          <Form.Group controlId="formBasicEmail">
+            <Form.Label>Correo electrónico</Form.Label>
+            <Form.Control
+              type="email"
+              placeholder="Correo electrónico"
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
+            />
+          </Form.Group>
+          <Form.Group controlId="formBasicPassword">
+            <Form.Label>Contraseña</Form.Label>
+            <Form.Control
+              type="password"
+              placeholder="Contraseña"
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
+            />
+          </Form.Group>
+          <div className='botones'>
+            <Button variant='success' type="submit">Iniciar sesión</Button>
+            <Button variant='success' href='/signup'>Registrarse</Button>
+          </div>
+        </Form>
+        {error && <p>{error}</p>}
+      </div>
     </div>
   );
 }

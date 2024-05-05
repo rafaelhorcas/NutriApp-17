@@ -96,8 +96,9 @@ export default function App() {
       <div>
           <Routes>
             <Route path="/signup" element={<CrearUsuario />} />
+            <Route path="/" element={<Login setAutenticado={setAutenticado} setUsuario={setUsuario} />} />
           </Routes>
-        <Login setAutenticado={setAutenticado} setUsuario={setUsuario} />
+        
       </div>
     )}
     </div>

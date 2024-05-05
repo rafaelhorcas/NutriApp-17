@@ -1,6 +1,6 @@
 import 'bootstrap/dist/css/bootstrap.min.css';
 import '../../App.css';
-
+import Title from '../Title';
 import React, { useState } from 'react';
 import { Button, Col, Form, Row } from 'react-bootstrap';
 import { useNavigate } from 'react-router-dom';
@@ -60,38 +60,43 @@ export default function NuevoUsuario() {
   };
 
   return (
-    <div className='main'>
-      <h2>Nuevo Usuario</h2>
-      <Form onSubmit={handleSubmit}>
-        <Form.Group as={Row} className="mb-3" controlId="formNombre">
-          <Form.Label column sm={2}>Nombre</Form.Label>
-          <Col sm={10}>
-            <Form.Control type="text" name="nombre" placeholder="Nombre de Usuario" value={usuario.nombre} onChange={handleInputChange} />
-          </Col>
-        </Form.Group>
-        <Form.Group as={Row} className="mb-3" controlId="formCantidad">
-          <Form.Label column sm={2}>Email</Form.Label>
-          <Col sm={10}>
-            <Form.Control type="text" name="email" placeholder="Email" value={usuario.email} onChange={handleInputChange} />
-          </Col>
-        </Form.Group>
-        <Form.Group as={Row} className="mb-3" controlId="formCal">
-          <Form.Label column sm={2}>Contraseña</Form.Label>
-          <Col sm={10}>
-            <Form.Control type="text" name="contraseña" placeholder="Contraseña" value={usuario.contraseña} onChange={handleInputChange} />
-          </Col>
-        </Form.Group>
-        <Form.Group as={Row} className="mb-3" controlId="formProt">
-          <Form.Label column sm={2}>Confirmar Contraseña</Form.Label>
-          <Col sm={10}>
-            <Form.Control type="text" name="confirmar_contraseña" placeholder="Confirmar Contraseña" value={usuario.confirmar_contraseña} onChange={handleInputChange} />
-          </Col>
-        </Form.Group>
-        <Form.Group className="mb-3" controlId="formEsPremium">
-          <Form.Check type="switch" id="custom-switch" label="Usuario Premium:" checked={usuario.esPremium} onChange={handlePremiumToggle}/>
-        </Form.Group>
-        <Button variant="success" type="submit">Crear</Button>
-      </Form>
+    <div>
+      <Title/>
+      <div className='register'>
+        <h1>Nuevo Usuario</h1>
+        <Form onSubmit={handleSubmit} style={{width: "100%"}}>
+          <Form.Group as={Row} className="mb-3" controlId="formNombre">
+            <Form.Label column sm={2}>Nombre</Form.Label>
+            <Col sm={10}>
+              <Form.Control type="text" name="nombre" placeholder="Nombre de Usuario" value={usuario.nombre} onChange={handleInputChange} />
+            </Col>
+          </Form.Group>
+          <Form.Group as={Row} className="mb-3" controlId="formCantidad">
+            <Form.Label column sm={2}>Email</Form.Label>
+            <Col sm={10}>
+              <Form.Control type="text" name="email" placeholder="Email" value={usuario.email} onChange={handleInputChange} />
+            </Col>
+          </Form.Group>
+          <Form.Group as={Row} className="mb-3" controlId="formCal">
+            <Form.Label column sm={2}>Contraseña</Form.Label>
+            <Col sm={10}>
+              <Form.Control type="text" name="contraseña" placeholder="Contraseña" value={usuario.contraseña} onChange={handleInputChange} />
+            </Col>
+          </Form.Group>
+          <Form.Group as={Row} className="mb-3" controlId="formProt">
+            <Form.Label column sm={2}>Confirmar Contraseña</Form.Label>
+            <Col sm={10}>
+              <Form.Control type="text" name="confirmar_contraseña" placeholder="Confirmar Contraseña" value={usuario.confirmar_contraseña} onChange={handleInputChange} />
+            </Col>
+          </Form.Group>
+          <Form.Group className="mb-3" controlId="formEsPremium">
+            <Form.Check type="switch" id="custom-switch" label="Usuario Premium" checked={usuario.esPremium} onChange={handlePremiumToggle}/>
+          </Form.Group>
+          <div className='boton-signup'>
+            <Button variant="success" type="submit">Crear</Button>
+            </div>
+        </Form>
+      </div>
     </div>
   );
 }

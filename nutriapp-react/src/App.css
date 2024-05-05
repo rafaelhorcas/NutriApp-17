@@ -231,3 +231,55 @@ color: #333;
 height: 150px;
 object-fit: cover;
 }
+
+/*Estilo de página de inicio de sesion */
+
+.login {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 2px solid black;
+  padding: 20px;
+  width: 40%;
+  display: flex;
+  flex-direction: column;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.login h1 {
+  margin-bottom: 20px;
+}
+
+.botones button {
+  margin-right: 20px;
+}
+
+/*Estilo de página de registro */
+
+.register {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  margin-left: auto;
+  margin-right: auto;
+  border: 2px solid black;
+  padding: 20px;
+  width: 40%;
+}
+.register .mb-3{
+  display: flex;
+  justify-content: center;
+}
+.boton-signup {
+  display: flex;
+  justify-content: center;
+
+}
+.boton-signup .btn-success{
+  display: flex;
+  justify-content: center;
+  font-size: 1.2em; 
+  padding: 10px 20px;
+}
