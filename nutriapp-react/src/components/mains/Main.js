@@ -37,7 +37,7 @@ export default function Main(props){
   const [activo, setActivo] = useState(false);
   const [objetivoCalorias, setObjetivoCalorias] = useState();
   const [CaloriasConsumidas, setCaloriasConsumidas] = useState();
-  const [inputObjetivoCalorias, setInputObjetivoCalorias] = useState(); 
+  const [inputObjetivoCalorias, setInputObjetivoCalorias] = useState(5000); 
 
   //Peticiones API REST segun el ckeckbox
   useEffect(() => {
@@ -91,7 +91,7 @@ export default function Main(props){
       progress: undefined,
       theme: "colored ",
       });;
-    if (objetivoCalorias != 0){
+    if (objetivoCalorias !== 0){
       if (CaloriasConsumidas >= objetivoCalorias) {
         console.log(CaloriasConsumidas, "caso cumplido");
         objetivoCumplido();

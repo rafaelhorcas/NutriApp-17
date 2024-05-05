@@ -6,15 +6,17 @@ import jakarta.persistence.Id;
 @Entity
 public class Usuario{
 
-    @Id private String email;
+    @Id private String email; 
     private String password;
     private boolean espremium;
-    
-
 
     public Usuario(String email, String password, boolean espremium) {
         this.email = email;
         this.password = password;
+        this.espremium = espremium;
+    }
+    public Usuario(String email, boolean espremium) {
+        this.email = email;
         this.espremium = espremium;
     }
     public Usuario(){}
